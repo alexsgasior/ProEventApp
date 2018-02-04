@@ -1,0 +1,50 @@
+﻿@model IEnumerable<ProEventApp.Models.Image>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Images</h2>
+@if (!Model.Any())
+{
+    <p>We don't have any categories yet.</p>
+    <p>
+        @Html.ActionLink("Add image", "AddImage", "Images", null, new { @class = "btn btn-primary" })
+    </p>
+}
+else
+{
+
+    <p>
+        @Html.ActionLink("Add image", "AddImage", "Images", null, new { @class = "btn btn-primary" })
+    </p>
+
+
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Image</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="data:image;base64,@System.Convert.ToBase64String(item.Bytes)" width="80" height="80"/>
+                </td>
+                @*<td>@Html.ActionLink("Details", "Details", "Professions", new { id = profession.Id }, null)</td>*@
+                @*<td>@Html.ActionLink("Delete", "Delete", "Categories", new { id = category.Id }, new { onclick = "return confirm('Are you sure you wish to delete this category?');" })</td>*@
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+
+
+
+
+
+    @*<img src="data:image;base64,@System.Convert.ToBase64String(item.Bytes)" width="80" height="80" />*@

@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ProEventApp.Models;
+using ProEventApp.ViewModels;
 
 namespace ProEventApp.Controllers
 {
@@ -15,10 +18,113 @@ namespace ProEventApp.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext _context;
 
         public ManageController()
         {
+            _context=new ApplicationDbContext();
         }
+
+        public ActionResult NewAppUser()
+        {
+            var appuser = _context.AppUsers.ToList();
+            //var viewModel = new ProfessionFormViewModel
+            //{
+            //    Categories = categories
+            //};
+
+
+            return View("AppUserForm");
+        }
+        public ActionResult AddUserToAppUserRole(AppUser _appUser)
+        {
+            var currentId = User.Identity.GetUserId();
+            _appUser.CurrentUserId = currentId;
+
+            var userTeraz = _context.Users.FirstOrDefault(m => m.Id == currentId);
+
+            _appUser.Email = userTeraz.Email;
+
+            if (_appUser.Id == 0)
+            {
+                _context.AppUsers.Add(_appUser);
+            }
+
+            _context.SaveChanges();
+
+
+
+            var appUserToLink = _context.AppUsers.FirstOrDefault(m => m.CurrentUserId == currentId);
+            int appUserToLinkId = appUserToLink.Id;
+            userTeraz.AppUserId = appUserToLinkId;
+
+            _context.SaveChanges();
+            var roleStore = new RoleStore<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new ApplicationDbContext());
+            var roleManager = new RoleManager<IdentityRole>(roleStore);
+            //await roleManager.CreateAsync(new IdentityRole("AppUser"));
+            UserManager.AddToRole(userTeraz.Id, "AppUser");
+
+            return RedirectToAction("Index", "Manage");
+        }
+
+        public ActionResult NewProfessional()
+        {
+            var pro = _context.Professionals.ToList();
+            var professions = _context.Professions.ToList();
+
+            var viewModel = new ProfessionalFormViewModel
+            {
+                Professions = professions
+            };
+
+
+            return View("ProfessionalForm",viewModel);
+        }
+
+
+        public ActionResult AddUserToProfessionalRole(/*Professional _professional*/ProfessionalFormViewModel _professional)
+        {
+            var currentId = User.Identity.GetUserId();
+            
+            var userTeraz = _context.Users.FirstOrDefault(m => m.Id == currentId);
+
+            bool flaga = _context.Professionals.Any(m => m.CurrentUserId == currentId);
+            if (!flaga)
+            {
+                _professional.Professional.CurrentUserId = currentId;
+
+                
+
+                _professional.Professional.Email = userTeraz.Email;
+
+
+                if (_professional.Professional.Id == 0)
+                {
+                    _context.Professionals.Add(_professional.Professional);
+                }
+
+                _context.SaveChanges();
+            }
+            
+
+
+
+            var professionalToLink = _context.Professionals.FirstOrDefault(m => m.CurrentUserId == currentId);
+            int professionalToLinkId = professionalToLink.Id;
+            userTeraz.ProfessionalId = professionalToLinkId;
+
+            _context.SaveChanges();
+            var roleStore = new RoleStore<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new ApplicationDbContext());
+            var roleManager = new RoleManager<IdentityRole>(roleStore);
+            //await roleManager.CreateAsync(new IdentityRole("AppUser"));
+            UserManager.AddToRole(userTeraz.Id, "Professional");
+
+            return RedirectToAction("Index", "Manage");
+        }
+
+
+
+
 
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {

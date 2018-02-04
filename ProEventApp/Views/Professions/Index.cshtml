@@ -1,0 +1,44 @@
+﻿@model IEnumerable<ProEventApp.Models.Profession>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Professions</h2>
+@if (!Model.Any())
+{
+    <p>We don't have any professions yet.</p>
+    <p>
+        @Html.ActionLink("New Profession", "New", "Professions", null, new { @class = "btn btn-primary" })
+    </p>
+}
+else
+{
+
+    <p>
+        @Html.ActionLink("New Profession", "New", "Professions", null, new { @class = "btn btn-primary" })
+    </p>
+
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Profession</th>
+                <th>Category</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var profession in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(profession.Name, "Edit", "Professions", new { id = profession.Id }, null)</td>
+                    <td>@profession.Category.Name</td>
+                    @*<td>@Html.ActionLink("Details", "Details", "Professions", new { id = profession.Id }, null)</td>*@
+                    <td>@Html.ActionLink("Delete", "Delete", "Professions", new { id = profession.Id }, new { onclick = "return confirm('Are you sure you wish to delete this profession?');" })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+

@@ -190,18 +190,163 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AppEventsController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\CitiesController.cs" />
+    <Compile Include="Controllers\EventImagesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImagesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ProfessionalController.cs" />
+    <Compile Include="Controllers\ProfessionsController.cs" />
+    <Compile Include="Controllers\StatesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801180655353_Init.cs" />
+    <Compile Include="Migrations\201801180655353_Init.Designer.cs">
+      <DependentUpon>201801180655353_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801180732377_Person_Professional_AppUser_addedToDb.cs" />
+    <Compile Include="Migrations\201801180732377_Person_Professional_AppUser_addedToDb.Designer.cs">
+      <DependentUpon>201801180732377_Person_Professional_AppUser_addedToDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801180734130_fk_added_to_IdentityModel.cs" />
+    <Compile Include="Migrations\201801180734130_fk_added_to_IdentityModel.Designer.cs">
+      <DependentUpon>201801180734130_fk_added_to_IdentityModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801191111540_city_state_addedToDb.cs" />
+    <Compile Include="Migrations\201801191111540_city_state_addedToDb.Designer.cs">
+      <DependentUpon>201801191111540_city_state_addedToDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801191118099_category_profession_added_toDb.cs" />
+    <Compile Include="Migrations\201801191118099_category_profession_added_toDb.Designer.cs">
+      <DependentUpon>201801191118099_category_profession_added_toDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801191120250_professionFk_addedTo_Professional.cs" />
+    <Compile Include="Migrations\201801191120250_professionFk_addedTo_Professional.Designer.cs">
+      <DependentUpon>201801191120250_professionFk_addedTo_Professional.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801201219143_CityFk_to_Person.cs" />
+    <Compile Include="Migrations\201801201219143_CityFk_to_Person.Designer.cs">
+      <DependentUpon>201801201219143_CityFk_to_Person.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801201222525_Profile_Image_ProfileImage_ProfileFkToPerson.cs" />
+    <Compile Include="Migrations\201801201222525_Profile_Image_ProfileImage_ProfileFkToPerson.Designer.cs">
+      <DependentUpon>201801201222525_Profile_Image_ProfileImage_ProfileFkToPerson.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801201230180_Event_Statuses.cs" />
+    <Compile Include="Migrations\201801201230180_Event_Statuses.Designer.cs">
+      <DependentUpon>201801201230180_Event_Statuses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801201231343_EventProfessional_InvStatuses.cs" />
+    <Compile Include="Migrations\201801201231343_EventProfessional_InvStatuses.Designer.cs">
+      <DependentUpon>201801201231343_EventProfessional_InvStatuses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801201529206_EventImages_addedToDb.cs" />
+    <Compile Include="Migrations\201801201529206_EventImages_addedToDb.Designer.cs">
+      <DependentUpon>201801201529206_EventImages_addedToDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801230651309_eventFk_to_eventPro.cs" />
+    <Compile Include="Migrations\201801230651309_eventFk_to_eventPro.Designer.cs">
+      <DependentUpon>201801230651309_eventFk_to_eventPro.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801231016492_PopulateDbWithInvStatuses.cs" />
+    <Compile Include="Migrations\201801231016492_PopulateDbWithInvStatuses.Designer.cs">
+      <DependentUpon>201801231016492_PopulateDbWithInvStatuses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801231021480_PopulateDbWithStatuses.cs" />
+    <Compile Include="Migrations\201801231021480_PopulateDbWithStatuses.Designer.cs">
+      <DependentUpon>201801231021480_PopulateDbWithStatuses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801250742031_Event_changeName_TO_AppEvent.cs" />
+    <Compile Include="Migrations\201801250742031_Event_changeName_TO_AppEvent.Designer.cs">
+      <DependentUpon>201801250742031_Event_changeName_TO_AppEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801250840551_AddressFk_added_to_AppEvent_Person.cs" />
+    <Compile Include="Migrations\201801250840551_AddressFk_added_to_AppEvent_Person.Designer.cs">
+      <DependentUpon>201801250840551_AddressFk_added_to_AppEvent_Person.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801250927224_Address_deletedFrom_AppEvent.cs" />
+    <Compile Include="Migrations\201801250927224_Address_deletedFrom_AppEvent.Designer.cs">
+      <DependentUpon>201801250927224_Address_deletedFrom_AppEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801250930010_AppEvent_added_City_street_and_houseNumber.cs" />
+    <Compile Include="Migrations\201801250930010_AppEvent_added_City_street_and_houseNumber.Designer.cs">
+      <DependentUpon>201801250930010_AppEvent_added_City_street_and_houseNumber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801251127518_eventID_changedTo_AppEventId_IN_EventImages.cs" />
+    <Compile Include="Migrations\201801251127518_eventID_changedTo_AppEventId_IN_EventImages.Designer.cs">
+      <DependentUpon>201801251127518_eventID_changedTo_AppEventId_IN_EventImages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801251150223_Image_CHANGE.cs" />
+    <Compile Include="Migrations\201801251150223_Image_CHANGE.Designer.cs">
+      <DependentUpon>201801251150223_Image_CHANGE.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801251213123_CategoryAddedToAppEvent.cs" />
+    <Compile Include="Migrations\201801251213123_CategoryAddedToAppEvent.Designer.cs">
+      <DependentUpon>201801251213123_CategoryAddedToAppEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801251303142_image_upgrade.cs" />
+    <Compile Include="Migrations\201801251303142_image_upgrade.Designer.cs">
+      <DependentUpon>201801251303142_image_upgrade.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801291601231_image_byteArray.cs" />
+    <Compile Include="Migrations\201801291601231_image_byteArray.Designer.cs">
+      <DependentUpon>201801291601231_image_byteArray.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801300838108_image_base64_added.cs" />
+    <Compile Include="Migrations\201801300838108_image_base64_added.Designer.cs">
+      <DependentUpon>201801300838108_image_base64_added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801301341284_Person_Profile-drop.cs" />
+    <Compile Include="Migrations\201801301341284_Person_Profile-drop.Designer.cs">
+      <DependentUpon>201801301341284_Person_Profile-drop.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801301343205_Person_Adress_drop.cs" />
+    <Compile Include="Migrations\201801301343205_Person_Adress_drop.Designer.cs">
+      <DependentUpon>201801301343205_Person_Adress_drop.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802011314589_AppUser_StringIDOfCurrentUser.cs" />
+    <Compile Include="Migrations\201802011314589_AppUser_StringIDOfCurrentUser.Designer.cs">
+      <DependentUpon>201802011314589_AppUser_StringIDOfCurrentUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802020754500_Professional_CurrentIdUser_upgrade.cs" />
+    <Compile Include="Migrations\201802020754500_Professional_CurrentIdUser_upgrade.Designer.cs">
+      <DependentUpon>201802020754500_Professional_CurrentIdUser_upgrade.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\AppUser.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\City.cs" />
+    <Compile Include="Models\AppEvent.cs" />
+    <Compile Include="Models\EventImage.cs" />
+    <Compile Include="Models\EventProfessional.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Image.cs" />
+    <Compile Include="Models\InvitationStatus.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\Profession.cs" />
+    <Compile Include="Models\Professional.cs" />
+    <Compile Include="Models\Profile.cs" />
+    <Compile Include="Models\ProfileImage.cs" />
+    <Compile Include="Models\RoleName.cs" />
+    <Compile Include="Models\State.cs" />
+    <Compile Include="Models\Status.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AppEvent_ImageViewModel.cs" />
+    <Compile Include="ViewModels\CityFormViewModel.cs" />
+    <Compile Include="ViewModels\CityStateViewModel.cs" />
+    <Compile Include="ViewModels\AppEventFormViewModel.cs" />
+    <Compile Include="ViewModels\ProfessionalFormViewModel.cs" />
+    <Compile Include="ViewModels\ProfessionFormViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-lumen.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -217,6 +362,8 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -258,9 +405,28 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\States\StateForm.cshtml" />
+    <Content Include="Views\Cities\Index.cshtml" />
+    <Content Include="Views\Cities\CityForm.cshtml" />
+    <Content Include="Views\Categories\Index.cshtml" />
+    <Content Include="Views\Categories\CategoriesForm.cshtml" />
+    <Content Include="Views\Professions\ProfessionForm.cshtml" />
+    <Content Include="Views\Professions\Index.cshtml" />
+    <Content Include="Views\AppEvents\Index.cshtml" />
+    <Content Include="Views\AppEvents\AppEventForm.cshtml" />
+    <Content Include="Views\Images\Index.cshtml" />
+    <Content Include="Views\Shared\AddImg.cshtml" />
+    <Content Include="Views\Images\AddImg.cshtml" />
+    <Content Include="Views\AppEvents\AddImg.cshtml" />
+    <Content Include="Views\AppEvents\AppEventDetailsForm.cshtml" />
+    <Content Include="Views\Manage\AppUserForm.cshtml" />
+    <Content Include="Views\Manage\ProfessionalForm.cshtml" />
+    <Content Include="Views\Professional\Index.cshtml" />
+    <Content Include="Views\AppEvents\ProsByCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\EventImages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -274,6 +440,92 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201801180655353_Init.resx">
+      <DependentUpon>201801180655353_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801180732377_Person_Professional_AppUser_addedToDb.resx">
+      <DependentUpon>201801180732377_Person_Professional_AppUser_addedToDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801180734130_fk_added_to_IdentityModel.resx">
+      <DependentUpon>201801180734130_fk_added_to_IdentityModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801191111540_city_state_addedToDb.resx">
+      <DependentUpon>201801191111540_city_state_addedToDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801191118099_category_profession_added_toDb.resx">
+      <DependentUpon>201801191118099_category_profession_added_toDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801191120250_professionFk_addedTo_Professional.resx">
+      <DependentUpon>201801191120250_professionFk_addedTo_Professional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801201219143_CityFk_to_Person.resx">
+      <DependentUpon>201801201219143_CityFk_to_Person.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801201222525_Profile_Image_ProfileImage_ProfileFkToPerson.resx">
+      <DependentUpon>201801201222525_Profile_Image_ProfileImage_ProfileFkToPerson.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801201230180_Event_Statuses.resx">
+      <DependentUpon>201801201230180_Event_Statuses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801201231343_EventProfessional_InvStatuses.resx">
+      <DependentUpon>201801201231343_EventProfessional_InvStatuses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801201529206_EventImages_addedToDb.resx">
+      <DependentUpon>201801201529206_EventImages_addedToDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801230651309_eventFk_to_eventPro.resx">
+      <DependentUpon>201801230651309_eventFk_to_eventPro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801231016492_PopulateDbWithInvStatuses.resx">
+      <DependentUpon>201801231016492_PopulateDbWithInvStatuses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801231021480_PopulateDbWithStatuses.resx">
+      <DependentUpon>201801231021480_PopulateDbWithStatuses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801250742031_Event_changeName_TO_AppEvent.resx">
+      <DependentUpon>201801250742031_Event_changeName_TO_AppEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801250840551_AddressFk_added_to_AppEvent_Person.resx">
+      <DependentUpon>201801250840551_AddressFk_added_to_AppEvent_Person.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801250927224_Address_deletedFrom_AppEvent.resx">
+      <DependentUpon>201801250927224_Address_deletedFrom_AppEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801250930010_AppEvent_added_City_street_and_houseNumber.resx">
+      <DependentUpon>201801250930010_AppEvent_added_City_street_and_houseNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801251127518_eventID_changedTo_AppEventId_IN_EventImages.resx">
+      <DependentUpon>201801251127518_eventID_changedTo_AppEventId_IN_EventImages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801251150223_Image_CHANGE.resx">
+      <DependentUpon>201801251150223_Image_CHANGE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801251213123_CategoryAddedToAppEvent.resx">
+      <DependentUpon>201801251213123_CategoryAddedToAppEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801251303142_image_upgrade.resx">
+      <DependentUpon>201801251303142_image_upgrade.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801291601231_image_byteArray.resx">
+      <DependentUpon>201801291601231_image_byteArray.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801300838108_image_base64_added.resx">
+      <DependentUpon>201801300838108_image_base64_added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801301341284_Person_Profile-drop.resx">
+      <DependentUpon>201801301341284_Person_Profile-drop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801301343205_Person_Adress_drop.resx">
+      <DependentUpon>201801301343205_Person_Adress_drop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802011314589_AppUser_StringIDOfCurrentUser.resx">
+      <DependentUpon>201802011314589_AppUser_StringIDOfCurrentUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802020754500_Professional_CurrentIdUser_upgrade.resx">
+      <DependentUpon>201802020754500_Professional_CurrentIdUser_upgrade.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

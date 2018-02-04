@@ -1,0 +1,59 @@
+﻿@model ProEventApp.ViewModels.AppEventFormViewModel
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Event</h2>
+@using (Html.BeginForm("Save", "AppEvents"))
+{
+    <p class="warning">You can add images to the event only after creating one.</p>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.AppEvent.Name)
+        @Html.TextBoxFor(m => m.AppEvent.Name, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.AppEvent.Description)
+        @Html.TextAreaFor(m => m.AppEvent.Description, new { @class = "form-control", @rows = "11" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.AppEvent.CategoryId)
+        @Html.DropDownListFor(m => m.AppEvent.CategoryId, new SelectList(Model.Categories, "Id", "Name"), "Select City", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.AppEvent.StatusId)
+        @Html.DropDownListFor(m => m.AppEvent.StatusId, new SelectList(Model.Statuses, "Id", "Name"), "Select event status", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.AppEvent.CityId)
+        @Html.DropDownListFor(m => m.AppEvent.CityId, new SelectList(Model.Cities, "Id", "Name"), "Select City", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.AppEvent.Street)
+        @Html.TextBoxFor(m => m.AppEvent.Street, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.AppEvent.HouseNumber)
+        @Html.TextBoxFor(m => m.AppEvent.HouseNumber, new { @class = "form-control" })
+    </div>
+
+
+    @Html.HiddenFor(m => m.AppEvent.Id)
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+
+
+
+
+
+<style>
+    
+    .warning {
+        color: red;
+    }
+
+
+</style>
+
+

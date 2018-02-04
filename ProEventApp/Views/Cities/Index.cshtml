@@ -1,0 +1,104 @@
+﻿@using WebGrease.Css.Extensions
+@model ProEventApp.ViewModels.CityStateViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+
+
+<h2>Cities</h2>
+@if (!Model.Cities.Any() && !Model.States.Any())
+{
+    <p>We don't have any States and Cities added yet.</p>
+    <p>
+        @Html.ActionLink("New State", "New", "States", null, new { @class = "btn btn-primary" })
+    </p>
+    <p>
+        @Html.ActionLink("New City", "New", "Cities", null, new { @class = "btn btn-primary" })
+    </p>
+}
+else
+{
+
+    <p>
+        @Html.ActionLink("New City", "New", "Cities", null, new { @class = "btn btn-primary" })
+    </p>
+
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>City</th>
+                <th>State</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var city in Model.Cities)
+            {
+                <tr>
+                    <td>@Html.ActionLink(city.Name, "Edit", "Cities", new { id = city.Id }, null)</td>
+                    <td>@city.State.Name</td>
+                    <td>@Html.ActionLink("Delete", "Delete", "Cities", new { id = city.Id }, new { onclick = "return confirm('Are you sure you wish to delete this city?');" })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h2>States</h2>
+    if (!Model.States.Any())
+    {
+        <p>We don't have any States yet.</p>
+    }
+    else
+    {
+
+        <p>
+            @Html.ActionLink("New State", "New", "States", null, new { @class = "btn btn-primary" })
+        </p>
+
+
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>State</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var state in Model.States)
+            {
+                <tr>
+                    <td>@Html.ActionLink(state.Name, "Edit", "States", new { id = state.Id }, null)</td>
+                    <td>@Html.ActionLink("Delete", "Delete", "States", new { id = state.Id }, new { onclick = "return confirm('Are you sure you wish to delete this State?');" })</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+
+        <div>
+            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Open Modal</a>
+            
+            <div class="modal fade" id="myModal">
+                
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        
+                    </div>
+                </div>
+
+            </div>
+            
+
+        </div>
+
+
+    }
+
+
+}
+

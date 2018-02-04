@@ -1,0 +1,25 @@
+﻿@model ProEventApp.ViewModels.CityFormViewModel
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New City</h2>
+@using (Html.BeginForm("Save", "Cities"))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.City.Name)
+        @Html.TextBoxFor(m => m.City.Name, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.City.PostalCode)
+        @Html.TextBoxFor(m => m.City.PostalCode, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.City.StateId)
+        @Html.DropDownListFor(m => m.City.StateId, new SelectList(Model.States, "Id", "Name"), "Select state", new { @class = "form-control" })
+    </div>
+
+    @Html.HiddenFor(m => m.City.Id)
+    <button type="submit" class="btn btn-primary">Save</button>
+}
