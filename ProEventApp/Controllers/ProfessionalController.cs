@@ -38,12 +38,44 @@ namespace ProEventApp.Controllers
         }
 
 
-        // GET: Professional
-        public ActionResult Index()
-        {
-            var pros = _context.Professionals.Include(m=>m.Profession).ToList();
+        //// GET: Professional
+        //public ActionResult Index()
+        //{
+        //    var pros = _context.Professionals.Include(m=>m.Profession).ToList();
 
-            return View(pros);
+        //    return View(pros);
+        //}
+
+
+
+        // GET: Professional
+        public ActionResult Index(string proName)
+        {
+            var pros = _context.Professionals.Include(m => m.Profession).ToList();
+
+
+
+
+            return View();
         }
+
+        public ActionResult ListOfProsByProfessions(string search_query)
+        {
+            var profs = _context.Professionals.Include(m => m.Profession).ToList();
+            if (!string.IsNullOrWhiteSpace(search_query))
+            {
+                profs = _context.Professionals.Include(m=>m.Profession.Category).Include(m => m.Profession).Where(m => m.Profession.Name == search_query || m.Name== search_query
+                                                                                || m.Surname == search_query || m.Profession.Category.Name==search_query).ToList();
+            }
+
+
+            return View("ListByProfessions", profs);
+        }
+
+
+
+
+
+
     }
 }

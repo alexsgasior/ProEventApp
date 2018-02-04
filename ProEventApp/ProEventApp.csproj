@@ -423,6 +423,7 @@
     <Content Include="Views\Manage\ProfessionalForm.cshtml" />
     <Content Include="Views\Professional\Index.cshtml" />
     <Content Include="Views\AppEvents\ProsByCategory.cshtml" />
+    <Content Include="Views\Professional\ListByProfessions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
