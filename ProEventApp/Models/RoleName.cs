@@ -6,10 +6,11 @@ using System.Web;
 
 namespace ProEventApp.Models
 {
-    public class RoleName
+    public static class RoleName
     {
         public const string Professional = "Professional";
         public const string AppUser = "AppUser";
-        
+        public const string Admin = "Admin";
+
     }
 }

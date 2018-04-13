@@ -26,8 +26,23 @@ namespace ProEventApp.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleName.Admin + "," + RoleName.Professional)]
         public ActionResult Save(Profession profession)
         {
+            if (!ModelState.IsValid)
+            {
+                var categories = _context.Categories.ToList();
+                var viewModel = new ProfessionFormViewModel
+                {
+                    Categories = categories
+                };
+
+
+                return View("ProfessionForm", viewModel);
+            }
+
+
             if (profession.Id == 0)
             {
                 _context.Professions.Add(profession);
@@ -53,6 +68,7 @@ namespace ProEventApp.Controllers
 
 
 
+        [Authorize(Roles = RoleName.Admin + "," + RoleName.Professional)]
         public ActionResult New()
         {
             var categories = _context.Categories.ToList();
@@ -68,6 +84,7 @@ namespace ProEventApp.Controllers
 
 
         [Route("Professions/Edit/id")]
+        [Authorize(Roles = RoleName.Admin + "," + RoleName.Professional)]
         public ActionResult Edit(int id)
         {
             var profession = _context.Professions.SingleOrDefault(p => p.Id == id);
@@ -85,6 +102,7 @@ namespace ProEventApp.Controllers
         }
 
 
+        [Authorize(Roles = RoleName.Admin)]
         public ActionResult Delete(int id)
         {
             var profession = _context.Professions.SingleOrDefault(p => p.Id == id);
@@ -98,29 +116,20 @@ namespace ProEventApp.Controllers
         }
 
 
-        //public ActionResult Details(int id)
-        //{
-        //    var pro = _context.Professions.SingleOrDefault(p => p.Id == id);
-        //    if (pro == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    var viewModel = new ProfessionFormViewModel
-        //    {
-        //        Profession = pro,
-        //        Categories = _context.Categories.ToList()
-        //    };
-        //    return View("Details", viewModel);
-        //}
-
-
 
 
         [Route("Professions/Index")]
+        [Authorize(Roles = RoleName.Admin + "," + RoleName.Professional+","+RoleName.AppUser)]
         public ActionResult Index()
         {
             var professions = _context.Professions.Include(p => p.Category).ToList().OrderBy(m=>m.Category.Name);
-            return View(professions);
+
+            if (User.IsInRole(RoleName.AppUser))
+            {
+                return View("IndexList", professions);
+            }
+
+            return View("Index",professions);
         }
 
 

@@ -25,6 +25,91 @@ namespace ProEventApp.Controllers
             _context=new ApplicationDbContext();
         }
 
+        [Authorize(Roles = RoleName.Professional+","+RoleName.AppUser)]
+        public ActionResult NewProfile()
+        {
+            var currentId = User.Identity.GetUserId();
+            
+            var userTeraz = _context.Users.FirstOrDefault(m => m.Id == currentId);
+            var isUser = userTeraz.AppUserId != null;
+            var isProfessional = userTeraz.ProfessionalId != null;
+
+            if (isUser)
+            {
+                var _appUser = _context.AppUsers.SingleOrDefault(m => m.CurrentUserId == currentId);
+                var viewModel = new UserProfileViewModel()
+                {
+                    AppUser = _appUser
+                };
+                return View("userProfileForm", viewModel);
+            }
+            if (isProfessional)
+            {
+                var _professional = _context.Professionals.SingleOrDefault(m => m.CurrentUserId == currentId);
+                var viewModel = new ProfessionalProfileViewModel()
+                {
+                    Professional = _professional
+                };
+                return View("professionalProfileForm", viewModel);
+            }
+            return RedirectToAction("Index", "Manage");
+        }
+
+        [ValidateAntiForgeryToken]
+        public ActionResult SaveProfileToUser(UserProfileViewModel _userProfile)
+        {
+            var currentId = User.Identity.GetUserId();
+            //if (!ModelState.IsValid)
+            //{
+                
+            //    var _appUser = _context.AppUsers.SingleOrDefault(m => m.CurrentUserId == currentId);
+            //    var viewModel = new UserProfileViewModel()
+            //    {
+            //        AppUser = _appUser
+            //    };
+            //    return View("userProfileForm", viewModel);
+            //}
+            _userProfile.Profile.WhoCreated = User.Identity.GetUserId();
+            _context.Profiles.Add(_userProfile.Profile);
+            _context.SaveChanges();
+
+
+            var profileToLink = _context.Profiles.SingleOrDefault(m => m.WhoCreated == currentId);
+            var userToGetProfile = _context.AppUsers.SingleOrDefault(m => m.CurrentUserId == currentId);
+
+            userToGetProfile.ProfileId = profileToLink.Id;
+            _context.SaveChanges();
+
+
+            return RedirectToAction("Index", "Manage");
+        }
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleName.Professional)]
+        public ActionResult SaveProfileToProfessional(ProfessionalProfileViewModel _proProfile)
+        {
+            var currentId = User.Identity.GetUserId();
+            //if (!ModelState.IsValid)
+            //{
+            //    var _professional = _context.Professionals.SingleOrDefault(m => m.CurrentUserId == currentId);
+            //    var viewModel = new ProfessionalProfileViewModel()
+            //    {
+            //        Professional = _professional
+            //    };
+            //    return View("professionalProfileForm", viewModel);
+            //}
+            _proProfile.Profile.WhoCreated = User.Identity.GetUserId();
+            _context.Profiles.Add(_proProfile.Profile);
+            _context.SaveChanges();
+            
+            var profileToLink = _context.Profiles.SingleOrDefault(m => m.WhoCreated == currentId);
+            var professionalToGetProfile = _context.Professionals.SingleOrDefault(m => m.CurrentUserId == currentId);
+
+            professionalToGetProfile.ProfileId = profileToLink.Id;
+            _context.SaveChanges();
+            
+            return RedirectToAction("Index", "Manage");
+        }
+
         public ActionResult NewAppUser()
         {
             var appuser = _context.AppUsers.ToList();
@@ -36,6 +121,7 @@ namespace ProEventApp.Controllers
 
             return View("AppUserForm");
         }
+        [ValidateAntiForgeryToken]
         public ActionResult AddUserToAppUserRole(AppUser _appUser)
         {
             var currentId = User.Identity.GetUserId();
@@ -44,6 +130,8 @@ namespace ProEventApp.Controllers
             var userTeraz = _context.Users.FirstOrDefault(m => m.Id == currentId);
 
             _appUser.Email = userTeraz.Email;
+            _appUser.ProfileId = 1; // tworzy wiazanie do profilu "domyslnego"!! 
+            
 
             if (_appUser.Id == 0)
             {
@@ -82,8 +170,25 @@ namespace ProEventApp.Controllers
         }
 
 
+        [ValidateAntiForgeryToken]
         public ActionResult AddUserToProfessionalRole(/*Professional _professional*/ProfessionalFormViewModel _professional)
         {
+
+            //if (!ModelState.IsValid)
+            //{
+            //    var pro = _context.Professionals.ToList();
+            //    var professions = _context.Professions.ToList();
+
+            //    var viewModel = new ProfessionalFormViewModel
+            //    {
+            //        Professions = professions
+            //    };
+
+
+            //    return View("ProfessionalForm", viewModel);
+            //}
+
+            
             var currentId = User.Identity.GetUserId();
             
             var userTeraz = _context.Users.FirstOrDefault(m => m.Id == currentId);
@@ -96,7 +201,7 @@ namespace ProEventApp.Controllers
                 
 
                 _professional.Professional.Email = userTeraz.Email;
-
+                _professional.Professional.ProfileId = 1;// tworzy tymczasowy profil "domyslny"
 
                 if (_professional.Professional.Id == 0)
                 {
@@ -106,9 +211,6 @@ namespace ProEventApp.Controllers
                 _context.SaveChanges();
             }
             
-
-
-
             var professionalToLink = _context.Professionals.FirstOrDefault(m => m.CurrentUserId == currentId);
             int professionalToLinkId = professionalToLink.Id;
             userTeraz.ProfessionalId = professionalToLinkId;
@@ -178,7 +280,259 @@ namespace ProEventApp.Controllers
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
+
+            var userToCheck = _context.Users.SingleOrDefault(m => m.Id == userId); // user z bazy logowania 
+
+            bool haveRole = userToCheck.AppUserId != null || userToCheck.ProfessionalId != null ? true : false; //czy user ma role w systemie wybrana 
+
+            AppUser rolledUser = new AppUser();
+            Professional rolledProfessional = new Professional();
+            bool isUser = userToCheck.AppUserId != null ? true : false;
+            bool isPro = userToCheck.ProfessionalId!=null? true : false;
+
+            if(isUser)
+                rolledUser = _context.AppUsers.SingleOrDefault(m => m.CurrentUserId == userId);
+
+            if(isPro)
+                rolledProfessional = _context.Professionals.SingleOrDefault(m => m.CurrentUserId == userId);
+
+            bool userHasProfile = rolledUser.ProfileId != 1 ? true : false;
+            bool proHasProfile = rolledProfessional.ProfileId != 1 ? true : false;  // przy tworzeniu nowego uzytkownika przypisuje mu
+                                                                                    // id profilu 1
+
+
+
+            if (!haveRole)
+            {
+                return View("IndexWithRoleChoose",model);
+            }
+
+            if (haveRole)
+            {
+                if (isUser && !userHasProfile)
+                {
+                    return View("IndexCreateUserProfile", model);
+                }
+                if (isPro && !proHasProfile)
+                {
+                    return View("IndexCreateProfessionalProfile", model);
+                }
+            }
+
+            if (isUser && userHasProfile && User.IsInRole(RoleName.AppUser))
+            {
+                var _appUser = _context.AppUsers.SingleOrDefault(m => m.CurrentUserId == userId);
+                var _appUserId = _appUser.Id;
+
+                model.InvitationStatuses = _context.InvitationStatuses.ToList();
+                model.AppUser = _appUser;
+
+
+
+
+                var profile = _context.Profiles.SingleOrDefault(m => m.Id == _appUser.ProfileId);
+
+                var _profileImages = _context.ProfileImages.Include(m => m.Image)
+                    .Where(m => m.ProfileId == profile.Id)
+                    .ToList();
+
+                
+
+                model.ProfileImages = _profileImages;
+                model.Profile = profile;
+
+
+
+                return View("IndexUserDashboard", model);
+            }
+            if (isPro && proHasProfile && User.IsInRole(RoleName.Professional))
+            {
+                var pro = _context.Professionals.Include(m=>m.Profession).Include(m=>m.Profile).SingleOrDefault(m => m.CurrentUserId == userId);
+                var proId = pro.Id;
+                
+                model.InvitationStatuses = _context.InvitationStatuses.ToList();
+
+
+                var acceptedEvents = _context.EventProfessionals.Include(m=>m.AppEvent).Where(m => m.InvitationStatusId == 2)
+                    .Where(m => m.ProfessionalId == proId).ToList();
+
+                var acceptedEventIds = acceptedEvents.Select(m => m.AppEventId).ToList();
+
+                var _listOfAcceptedAppEvents = _context.Events.Include(m => m.Status).Include(m => m.Category)
+                    .Include(m => m.AppUser).Include(m => m.City)
+                    .Where(m => acceptedEventIds.Contains(m.Id));
+
+                var _allAppEvents = _context.Events.Include(m => m.Status).Include(m => m.Category)
+                                    .Include(m => m.AppUser).Include(m => m.City).ToList();
+
+                
+                var tempAll = _allAppEvents;
+                
+                foreach (var item in _listOfAcceptedAppEvents) tempAll.Remove(item);
+                var liczba = tempAll.Count();  // sprawdzam czy usunela zaakceptoany event
+                model.AppEvents = tempAll.Where(m=>m.CategoryId == pro.Profession.CategoryId);
+                model.Professional = pro;
+                var profile = _context.Profiles.SingleOrDefault(m => m.Id == pro.ProfileId);
+
+                var _profileImages = _context.ProfileImages.Include(m => m.Image)
+                                        .Where(m => m.ProfileId == profile.Id)
+                                        .ToList();
+
+                //var viewModel = new ProfileViewModel()
+                //{
+                //    Professional = professional,
+                //    Profile = profile,
+                //    ProfileImages = _profileImages
+                //};
+
+
+
+                model.ProfileImages = _profileImages;
+                model.Profile = profile;
+
+                return View("IndexProfessionalDashboard", model);
+            }
+
+
             return View(model);
+        }
+
+
+
+
+        [Authorize(Roles = RoleName.Professional)]
+        public ActionResult ListProInv()
+        {
+            var userId = User.Identity.GetUserId();
+            var pro = _context.Professionals.SingleOrDefault(m => m.CurrentUserId == userId);
+            var proId = pro.Id;
+
+            var viewModel = new ListOfProInvsViewModel();
+
+            var eventToGetAppEventId = _context.EventProfessionals.Where(m => m.ProfessionalId == proId);
+            
+            var _events = _context.EventProfessionals.Include(m => m.AppEvent)
+                            .Include(m => m.InvitationStatus).Where(m => m.ProfessionalId == proId)
+                            .Where(m=>m.InvitationStatusId!=2 && m.InvitationStatusId!=3)
+                            .Where(m=>m.Rola == "AppUser").ToList();
+
+            
+            viewModel.EventProfessionals = _events;
+            viewModel.InvitationStatuses = _context.InvitationStatuses.ToList();
+
+            return View("ListOfProInvs", viewModel);
+        }
+
+        [Authorize(Roles = RoleName.AppUser)]
+        public ActionResult ListInvFromProToEvent()
+        {
+            var userId = User.Identity.GetUserId();
+            var appuser = _context.AppUsers.SingleOrDefault(m => m.CurrentUserId == userId);
+            var appUserId = appuser.Id;
+
+            var viewModel = new ListOfProInvsViewModel();
+            
+            var _events = _context.EventProfessionals.Include(m => m.AppEvent)
+                .Include(m => m.InvitationStatus).Include(m=>m.Professional).Where(m => m.AppEvent.AppUserId == appUserId)
+                .Where(m => m.InvitationStatusId != 2 && m.InvitationStatusId != 3)
+                .Where(m => m.Rola == "Professional").ToList();
+
+
+            viewModel.EventProfessionals = _events;
+            viewModel.InvitationStatuses = _context.InvitationStatuses.ToList();
+
+            return View("ListInvFromProToEvent", viewModel);
+        }
+
+        [Authorize(Roles = RoleName.AppUser)]
+        public ActionResult AppUserChangeInvStatusToAccept(int id)
+        {
+            
+            var invToChangeStatus = _context.EventProfessionals.SingleOrDefault(m => m.Id == id);
+            invToChangeStatus.InvitationStatusId = _context.InvitationStatuses
+                .SingleOrDefault(m => m.Name == "Accepted").Id;
+
+            _context.SaveChanges();
+
+            return RedirectToAction("ListInvFromProToEvent");
+
+        }
+
+
+        
+        [Authorize(Roles = RoleName.Professional)]
+        public ActionResult ProChangeInvStatusToAccept(int id)
+        {
+            var invToChangeStatus = _context.EventProfessionals.SingleOrDefault(m=>m.Id==id);
+            invToChangeStatus.InvitationStatusId = _context.InvitationStatuses
+                                                    .SingleOrDefault(m => m.Name == "Accepted").Id;
+
+            _context.SaveChanges();
+
+            return RedirectToAction("ListProInv");
+
+        }
+
+        [Authorize(Roles = RoleName.Professional)]
+        public ActionResult ListOfAcceptedEvents()
+        {
+            var userId = User.Identity.GetUserId();
+            var pro = _context.Professionals.SingleOrDefault(m => m.CurrentUserId == userId);
+            var proId = pro.Id;
+            // 2 == Accepted
+            var acceptedEvents = _context.EventProfessionals.Where(m => m.InvitationStatusId == 2)
+                                                            .Where(m=>m.ProfessionalId==proId).ToList();
+            var acceptedEventIds = acceptedEvents.Select(m => m.AppEventId).ToList();
+            var _events = _context.Events.Include(m => m.Status).Include(m => m.Category)
+                            .Include(m => m.AppUser).Include(m => m.City)
+                            .Where(m => acceptedEventIds.Contains(m.Id));
+
+            return View("ListOfAcceptedEvents",_events);
+        }
+
+        [Authorize(Roles = RoleName.AppUser)]
+        public ActionResult ListOfAcceptedEventsForAppUser()
+        {
+            var userId = User.Identity.GetUserId();
+            var _appUser = _context.AppUsers.SingleOrDefault(m => m.CurrentUserId == userId);
+            var _appUserId = _appUser.Id;
+            // 2 == Accepted
+            var acceptedEvents = _context.EventProfessionals.Where(m => m.InvitationStatusId == 2)
+                .Where(m => m.AppEvent.AppUserId == _appUserId).ToList();
+            var acceptedEventIds = acceptedEvents.Select(m => m.AppEventId).ToList();
+            var _events = _context.Events.Include(m => m.Status).Include(m => m.Category)
+                .Include(m => m.AppUser).Include(m => m.City)
+                .Where(m => acceptedEventIds.Contains(m.Id));
+
+            return View("ListOfAcceptedEventsForAppUser", _events);
+        }
+
+
+
+        [Authorize(Roles = RoleName.AppUser)]
+        public ActionResult AppUserChangeInvStatusToDecline(int id)
+        {
+            var invToChangeStatus = _context.EventProfessionals.SingleOrDefault(m => m.Id == id);
+            invToChangeStatus.InvitationStatusId = _context.InvitationStatuses
+                .SingleOrDefault(m => m.Name == "Decline").Id;
+
+            _context.SaveChanges();
+
+            return RedirectToAction("ListInvFromProToEvent");
+
+        }
+
+        [Authorize(Roles = RoleName.Professional)]
+        public ActionResult ProChangeInvStatusToDecline(int id)
+        {
+            var invToChangeStatus = _context.EventProfessionals.SingleOrDefault(m => m.Id == id);
+            invToChangeStatus.InvitationStatusId = _context.InvitationStatuses
+                                                    .SingleOrDefault(m => m.Name == "Decline").Id;
+
+            _context.SaveChanges();
+
+            return RedirectToAction("ListProInv");
+
         }
 
         //

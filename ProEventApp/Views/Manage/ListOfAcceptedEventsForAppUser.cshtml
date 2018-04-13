@@ -1,0 +1,61 @@
+﻿@model IEnumerable<ProEventApp.Models.AppEvent>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Events you particapate in:</h2>
+@if (!Model.Any())
+{
+    <p>You don't have any events yet.</p>
+    <h1> check your invitations</h1>
+    <p>
+        @Html.ActionLink("Check your invitations", "ListProInv", "Manage", null, new { @class = "btn btn-primary" })
+    </p>
+}
+else
+{
+    
+
+
+    <table class="table table-bordered table-hover table-dark table-striped">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Add an image</th>
+                <th>Delete</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var _event in Model)
+        {
+            <tr>
+                <td>@Html.ActionLink(_event.Name, "Edit", "AppEvents", new { id = _event.Id }, null)</td>
+
+                <td>@_event.Description</td>
+
+                <td>@_event.Category.Name</td>
+
+                <td>@Html.ActionLink("Add image", "AddImg", "AppEvents", new { id = _event.Id }, new { onclick = "return confirm('Are you sure you want to add images to this event?');" })</td>
+
+                <td>@Html.ActionLink("Delete", "Delete", "AppEvents", new { id = _event.Id }, new { onclick = "return confirm('Are you sure you wish to delete this event?');" })</td>
+
+                @*<td>@Html.ActionLink(linkText: "Details", actionName: "Details", controllerName: "AppEvents", routeValues: new { @id = _event.Id })Details</td>*@
+                <td><a href="@Url.Action("DetailsBackToManage","AppEvents",new {_event.Id})">Details</a></td>
+
+            </tr>
+    }
+        </tbody>
+    </table>
+}
+
+
+
+<p>
+    @Html.ActionLink("Back to dashboard", "Index", "Manage",new{@class="btn btn-primary"})
+</p>

@@ -28,8 +28,22 @@ namespace ProEventApp.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleName.Admin)]
         public ActionResult Save(City city)
         {
+            //if (!ModelState.IsValid)
+            //{
+            //    var states = _context.States.ToList();
+            //    var viewModel = new CityFormViewModel
+            //    {
+            //        States = states
+            //    };
+
+
+            //    return View("CityForm", viewModel);
+            //}
+
             if (city.Id == 0)
             {
                 _context.Cities.Add(city);
@@ -52,8 +66,8 @@ namespace ProEventApp.Controllers
         }
 
 
-
-
+        
+        [Authorize(Roles = RoleName.Admin)]
         public ActionResult New()
         {
             var states = _context.States.ToList();
@@ -69,6 +83,7 @@ namespace ProEventApp.Controllers
 
 
         [Route("Cities/Edit/id")]
+        [Authorize(Roles = RoleName.Admin)]
         public ActionResult Edit(int id)
         {
             var city = _context.Cities.SingleOrDefault(p => p.Id == id);
@@ -84,8 +99,9 @@ namespace ProEventApp.Controllers
             };
             return View("CityForm", viewModel);
         }
+        
 
-
+        [Authorize(Roles = RoleName.Admin)]
         public ActionResult Delete(int id)
         {
             var city = _context.Cities.SingleOrDefault(p => p.Id == id);
@@ -100,29 +116,13 @@ namespace ProEventApp.Controllers
         }
 
 
-        //public ActionResult Details(int id)
-        //{
-        //    var pro = _context.Professions.SingleOrDefault(p => p.Id == id);
-        //    if (pro == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    var viewModel = new ProfessionFormViewModel
-        //    {
-        //        Profession = pro,
-        //        Categories = _context.Categories.ToList()
-        //    };
-        //    return View("Details", viewModel);
-        //}
-
-
-
-
+        //[Authorize(Roles = RoleName.Professional)]
+        //[Authorize(Roles = RoleName.AppUser)]
+        [Authorize(Roles = RoleName.Admin+","+RoleName.AppUser+","+RoleName.Professional)]
         [Route("Cities/Index")]
         public ActionResult Index()
         {
             var cities = _context.Cities.Include(p => p.State).ToList();
-
 
             var viewModel = new CityStateViewModel()
             {
@@ -130,7 +130,10 @@ namespace ProEventApp.Controllers
                 States = _context.States.ToList()
             };
 
-
+            if (User.IsInRole(RoleName.AppUser) || User.IsInRole(RoleName.Professional))
+            {
+                return View("IndexList", viewModel);
+            }
 
 
 

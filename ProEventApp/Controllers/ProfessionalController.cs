@@ -8,6 +8,7 @@ using ProEventApp.Models;
 
 namespace ProEventApp.Controllers
 {
+    [AllowAnonymous]
     public class ProfessionalController : Controller
     {
         private ApplicationDbContext _context;
@@ -37,25 +38,13 @@ namespace ProEventApp.Controllers
 
         }
 
-
-        //// GET: Professional
-        //public ActionResult Index()
-        //{
-        //    var pros = _context.Professionals.Include(m=>m.Profession).ToList();
-
-        //    return View(pros);
-        //}
-
-
+        
 
         // GET: Professional
         public ActionResult Index(string proName)
         {
             var pros = _context.Professionals.Include(m => m.Profession).ToList();
-
-
-
-
+            
             return View();
         }
 
@@ -65,9 +54,20 @@ namespace ProEventApp.Controllers
             if (!string.IsNullOrWhiteSpace(search_query))
             {
                 profs = _context.Professionals.Include(m=>m.Profession.Category).Include(m => m.Profession).Where(m => m.Profession.Name == search_query || m.Name== search_query
-                                                                                || m.Surname == search_query || m.Profession.Category.Name==search_query).ToList();
+                                                                                || m.Surname == search_query || m.Profession.Category.Name==search_query ||m.CompanyName == search_query
+                                                                                || m.Phone == search_query)
+                                                                                .ToList();
+            }
+            
+            if (User.IsInRole(RoleName.AppUser) || User.IsInRole(RoleName.Professional))
+            {
+                return View("ListOfProsForProAndAppUser", profs);
             }
 
+            if (User.IsInRole(RoleName.Admin))
+            {
+                return View("ListOfProsForAdmin", profs);
+            }
 
             return View("ListByProfessions", profs);
         }

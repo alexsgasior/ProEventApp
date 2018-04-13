@@ -1,0 +1,35 @@
+﻿@model ProEventApp.ViewModels.ProfileViewModel
+
+
+
+<div class="card mb-3">
+    <h2 class="card-header">
+        @Model.AppUser.Name @Model.AppUser.Surname
+        <h4>Prefered name: @Model.Profile.PreferedName</h4>
+    </h2>
+    <div class="card-body">
+
+        @foreach (var img in Model.ProfileImages)
+        {
+            <img src="data:image;base64,@System.Convert.ToBase64String(img.Image.Bytes)" width="250" height="250" />
+        }
+
+
+        <div class="card-body">
+            <p class="card-text">About: @Model.Profile.About</p>
+        </div>
+
+        <h5 class="card-title">Phone: @Model.AppUser.Phone <br /> e-mail: @Model.AppUser.Email </h5>
+    </div>
+
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Motto: @Model.Profile.Motto</li>>
+    </ul>
+    
+
+</div>
+
+
+<div>
+    @Html.ActionLink(linkText: "Back to dashboard", actionName: "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" }, controllerName: "Manage")
+</div>

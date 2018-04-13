@@ -1,21 +1,30 @@
-﻿@model IEnumerable<ProEventApp.Models.Professional>
+﻿@*@model IEnumerable<ProEventApp.Models.Professional>*@
+
+@model ProEventApp.Models.Professional
+
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Professionals</h2>
 
-<h2>Find the Professional by his profession!</h2>
-<br />
-<br />
-<br />
-@using (Html.BeginForm("ListOfProsByProfessions", "Professional"))
-{
-    <div style="float:left; padding: 10px 0 0 100px; width:50%">
-        Search: <input type="text" id="search_query" name="search_query" style="width: 225px" />
-        <input type="submit" id="Search" value="Search" />
-    </div>
-}
-<br /><br /><br /><br />
+<div class="landing-page-content">
+    <h1 class="text-primary">Professionals</h1>
+
+    <h2 class="text-muted">Find the Professional!</h2>
+    
+    @using (Html.BeginForm("ListOfProsByProfessions", "Professional"))
+    {
+        @*<div class="input-group">
+            <input type="text" class="form-control" id="search_query" placeholder="Type who you looking for">
+            <div class="input-group-append">
+                <button type="submit" id="Search" name="search_query" class="btn btn-primary">Search</button>
+            </div>
+        </div>*@
+        <p>
+            <h3 class="text-muted">Who are you looking for:</h3> <input type="text" name="search_query"/>
+            <input type="submit" value="Search" class="btn btn-primary"/>
+        </p>
+    }
+</div>

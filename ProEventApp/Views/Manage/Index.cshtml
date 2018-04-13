@@ -1,14 +1,14 @@
 ﻿@model ProEventApp.Models.IndexViewModel
 @{
-    ViewBag.Title = "Manage";
+    ViewBag.Title = "Dashboard";
 }
 
-<h2>@ViewBag.Title.</h2>
+<h2>Your dashboard</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
-    <h4>Change your account settings</h4>
-    <hr />
+    <h4>Manage your account from here</h4>
+    <hr/>
     <dl class="dl-horizontal">
         <dt>Password:</dt>
         <dd>
@@ -28,8 +28,8 @@
             @Model.Logins.Count [
             @Html.ActionLink("Manage", "ManageLogins") ]
         </dd>
-        
-       
+
+
     </dl>
 </div>
 
@@ -42,5 +42,17 @@
 <div>
     <p>
         @Html.ActionLink("Register Your Company", "NewProfessional", "Manage", null, new { @class = "btn btn-primary" })
+    </p>
+</div>
+
+
+<div>
+    <p>
+        @Html.ActionLink("Create your User Profile","NewProfile","Manage", null, new { @class = "btn btn-primary" })
+    </p>
+</div>
+<div>
+    <p>
+        @Html.ActionLink("Create your Professional Profile", "NewProfile", "Manage", null, new { @class = "btn btn-primary" })
     </p>
 </div>

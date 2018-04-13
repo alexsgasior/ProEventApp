@@ -4,19 +4,71 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@{
+    WebImage photo = null;
+
+
+    if (IsPost)
+    {
+        var _photoBytes = photo.GetBytes();
+        photo = WebImage.GetImageFromRequest();
+
+    }
+
+}
+
 <h2>New Event</h2>
-@using (Html.BeginForm("Save", "AppEvents"))
+@using (Html.BeginForm("Save", "AppEvents",FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <p class="warning">You can add images to the event only after creating one.</p>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.AppEvent.CityId)
+        @Html.DropDownListFor(m => m.AppEvent.CityId, new SelectList(Model.Cities, "Id", "Name"), "Select City", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.AppEvent.Street)
+        @Html.TextBoxFor(m => m.AppEvent.Street, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.AppEvent.Street)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.AppEvent.HouseNumber)
+        @Html.TextBoxFor(m => m.AppEvent.HouseNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.AppEvent.HouseNumber)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.AppEvent.Date)
+        @Html.TextBoxFor(m => m.AppEvent.Date, new { type = "datetime-local" })
+        @Html.ValidationMessageFor(m => m.AppEvent.HouseNumber)
+    </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.AppEvent.Name)
         @Html.TextBoxFor(m => m.AppEvent.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.AppEvent.Name)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.AppEvent.Description)
         @Html.TextAreaFor(m => m.AppEvent.Description, new { @class = "form-control", @rows = "11" })
+        @Html.ValidationMessageFor(m => m.AppEvent.Description)
     </div>
+
+
+
+    <h3>Upload image</h3>
+    
+    <h4>Image</h4>
+    <hr /> 
+    <div class="form-group">
+        @Html.LabelFor(model => model.Image.Bytes, htmlAttributes: new { @class = "control-label col-md-2" })            
+            <input type="file" id="image1" name="image1" />
+    </div>
+
+    <div class="form-group">
+            <input type="text" id="comment" name="comment" />
+    </div>
+        
+    
+    
     <div class="form-group">
         @Html.LabelFor(m => m.AppEvent.CategoryId)
         @Html.DropDownListFor(m => m.AppEvent.CategoryId, new SelectList(Model.Categories, "Id", "Name"), "Select City", new { @class = "form-control" })
@@ -25,35 +77,32 @@
         @Html.LabelFor(m => m.AppEvent.StatusId)
         @Html.DropDownListFor(m => m.AppEvent.StatusId, new SelectList(Model.Statuses, "Id", "Name"), "Select event status", new { @class = "form-control" })
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.AppEvent.CityId)
-        @Html.DropDownListFor(m => m.AppEvent.CityId, new SelectList(Model.Cities, "Id", "Name"), "Select City", new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.AppEvent.Street)
-        @Html.TextBoxFor(m => m.AppEvent.Street, new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.AppEvent.HouseNumber)
-        @Html.TextBoxFor(m => m.AppEvent.HouseNumber, new { @class = "form-control" })
-    </div>
-
+    
 
     @Html.HiddenFor(m => m.AppEvent.Id)
-    <button type="submit" class="btn btn-primary">Save</button>
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Add</button>
 }
 
+<br />
+<div>
+    <p>
+        @Html.ActionLink(linkText: "Back", actionName: "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
+    </p>
+</div>
 
 
 
 
 <style>
-    
+
     .warning {
         color: red;
     }
-
-
 </style>
+
+@section	scripts	{
+    @Scripts.Render("~/bundles/jqueryval")
+}
 
 

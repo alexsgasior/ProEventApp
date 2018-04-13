@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace ProEventApp.Controllers
 {
+    
     public class StatesController : Controller
     {
         private ApplicationDbContext _context;
@@ -24,8 +25,17 @@ namespace ProEventApp.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleName.Admin)]
         public ActionResult Save(State state)
         {
+            //if (!ModelState.IsValid)
+            //{
+            //    var states = _context.States.ToList();
+            //    return View("StateForm");
+            //}
+
+
             if (state.Id == 0)
             {
                 _context.States.Add(state);
@@ -46,21 +56,18 @@ namespace ProEventApp.Controllers
         }
 
 
-
+        
+        [Authorize(Roles = RoleName.Admin)]
         public ActionResult New()
         {
             var states = _context.States.ToList();
-            //var viewModel = new ProfessionFormViewModel
-            //{
-            //    Categories = categories
-            //};
-
-
+           
             return View("StateForm");
         }
 
 
         [Route("States/Edit/id")]
+        [Authorize(Roles = RoleName.Admin)]
         public ActionResult Edit(int id)
         {
             var state = _context.States.SingleOrDefault(p => p.Id == id);
@@ -75,6 +82,8 @@ namespace ProEventApp.Controllers
 
 
 
+        
+        [Authorize(Roles = RoleName.Admin)]
         public ActionResult Delete(int id)
         {
             var state = _context.States.SingleOrDefault(p => p.Id == id);
@@ -88,15 +97,6 @@ namespace ProEventApp.Controllers
             return RedirectToAction("Index", "Cities");
 
         }
-
-
-
-
-        // GET: Categories
-        //public ActionResult _StatesListShared() //Index
-        //{
-        //    var states = _context.States.ToList();
-        //    return PartialView(states);  // Index = _StatesList
-        //}
+        
     }
 }

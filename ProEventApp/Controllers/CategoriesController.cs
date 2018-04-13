@@ -25,8 +25,14 @@ namespace ProEventApp.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleName.Admin + "," + RoleName.Professional)]
         public ActionResult Save(Category category)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("CategoriesForm");
+            }
             if (category.Id == 0)
             {
                 _context.Categories.Add(category);
@@ -50,6 +56,7 @@ namespace ProEventApp.Controllers
 
 
 
+        [Authorize(Roles = RoleName.Admin + "," + RoleName.Professional)]
         public ActionResult New()
         {
             var categories = _context.Categories.ToList();
@@ -64,6 +71,7 @@ namespace ProEventApp.Controllers
 
 
         [Route("Categories/Edit/id")]
+        [Authorize(Roles = RoleName.Admin + "," + RoleName.Professional)]
         public ActionResult Edit(int id)
         {
             var category = _context.Categories.SingleOrDefault(p => p.Id == id);
@@ -78,6 +86,7 @@ namespace ProEventApp.Controllers
 
 
 
+        [Authorize(Roles = RoleName.Admin)]
         public ActionResult Delete(int id)
         {
             var category = _context.Categories.SingleOrDefault(p => p.Id == id);
@@ -96,10 +105,17 @@ namespace ProEventApp.Controllers
 
 
         // GET: Categories
+        [Authorize(Roles = RoleName.Admin + "," + RoleName.Professional+","+RoleName.AppUser)]
         public ActionResult Index()
         {
             var categories = _context.Categories.ToList();
-            return View(categories);
+            if (User.IsInRole(RoleName.AppUser))
+            {
+                return View("IndexList", categories);
+            }
+
+
+            return View("Index",categories);
         }
     }
 }

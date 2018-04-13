@@ -1,0 +1,124 @@
+﻿@model ProEventApp.ViewModels.AppEvent_ImageViewModel
+@{
+    ViewBag.Title = "AppEventDetailsForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="background: rgba(255, 0, 0, 0.2);">
+
+    <h1>
+        @Model.Event.Name
+    </h1>
+
+    @foreach (var img in Model.EventImages)
+    {
+        <img src="data:image;base64,@System.Convert.ToBase64String(img.Image.Bytes)" width="250" height="250" />
+        <p>@img.Image.Comment</p>
+    }
+    <h3>
+        @Model.Event.Description
+    </h3>
+    <h4>
+        Category of the event: @Model.Event.Category.Name
+    </h4>
+
+    <h4>Location of the event:</h4>
+    <p>
+        City: @Model.Event.City.Name
+    </p>
+    <p>
+        Street: @Model.Event.Street
+    </p>
+    <p>
+        House number: @Model.Event.HouseNumber
+    </p>
+
+    @if (Model.EventProfessionals.Any())
+    {
+        <h2>Offers accepted to this event</h2>
+
+        foreach (var item in Model.EventProfessionals)
+        {
+            <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+                <div class="card-header">
+                    @Html.ActionLink(linkText: "Show event details", actionName: "Details", routeValues: new { id = item.AppEventId }, htmlAttributes: new { @class = "btn btn-primary" }, controllerName: "AppEvents")
+                    @Html.ActionLink(linkText: "Show professional's profile", actionName: "ProDetailProfileSpecific", routeValues: new { id = item.ProfessionalId }, htmlAttributes: new { @class = "btn btn-primary" }, controllerName: "Profiles")
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">@item.Price pln</h4>
+                    <p class="card-text">@item.Comment</p>
+                    <p>Offer send by: @item.Rola</p>
+                    <p class="card-text">Professional's phone number: @item.Professional.Phone</p>
+                    <p class="card-text">Professional's email: @item.Professional.Email</p>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <h1>There is no offers</h1>
+    }
+
+    <table class="table table-bordered table-hover table-dark table-striped">
+        <thead class="bg-primary">
+        <tr>
+            <th>Comment</th>
+            <th>Who</th>
+            <th>Added</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var comment in Model.Comments)
+        {
+            <tr>
+                <td>@comment.Content</td>
+                <td>@comment.Who</td>
+                <td>@comment.DateCreated</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <h2>New comment</h2>
+    @using (Html.BeginForm("SaveCommentToEvent", "AppEvents"))
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.Comment.Content)
+            @Html.TextBoxFor(m => m.Comment.Content, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Comment.Content)
+        </div>
+
+        @Html.HiddenFor(m => m.Comment.Id)
+        <button type="submit" class="btn btn-primary">Comment</button>
+    }
+
+    <p>
+        <button type="button" class="btn btn-primary btn-lg" onclick="location.href = '@Url.Action("Index", "AppEvents")'">Back to your events</button>
+    </p>
+    <p>
+        @Html.ActionLink("Edit", "Edit", "AppEvents", new { id = @Model.Event.Id }, new { @class = "btn btn-primary" })
+        @*@Html.ActionLink(linkText: "Edit", actionName: "Edit",  routeValues: new { id = @Model.Event.Id },controllerName:"AppEvents")*@
+    </p>
+    <p>
+        @Html.ActionLink("Find Your Pro!", "FindProsByCategory", "AppEvents", new { id = @Model.Event.CategoryId }, new { @class = "btn btn-primary" })
+    </p>
+
+    <div>
+        <p>
+            @Html.ActionLink(linkText: "Back to the list", actionName: "ListOfAcceptedEventsForAppUser", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" }, controllerName: "Manage")
+        </p>
+    </div>
+
+    <br />
+    <div>
+        <p>
+            @Html.ActionLink(linkText: "Back to the dashboard", actionName: "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" }, controllerName: "Manage")
+        </p>
+    </div>
+
+
+</div>
+
+
+@section	scripts	{
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -13,6 +13,6 @@ namespace ProEventApp.Models
         public Profile Profile { get; set; }
         public int ImageId { get; set; }
         public Image Image { get; set; }
-
+        
     }
 }

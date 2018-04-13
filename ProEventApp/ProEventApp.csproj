@@ -199,6 +199,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProfessionalController.cs" />
     <Compile Include="Controllers\ProfessionsController.cs" />
+    <Compile Include="Controllers\ProfilesController.cs" />
     <Compile Include="Controllers\StatesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -315,6 +316,106 @@
     <Compile Include="Migrations\201802020754500_Professional_CurrentIdUser_upgrade.Designer.cs">
       <DependentUpon>201802020754500_Professional_CurrentIdUser_upgrade.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802060706325_validation_added_to_Address.cs" />
+    <Compile Include="Migrations\201802060706325_validation_added_to_Address.Designer.cs">
+      <DependentUpon>201802060706325_validation_added_to_Address.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802060712131_validation_upgradedAddress_AppEvent.cs" />
+    <Compile Include="Migrations\201802060712131_validation_upgradedAddress_AppEvent.Designer.cs">
+      <DependentUpon>201802060712131_validation_upgradedAddress_AppEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802060713393_validation_added_to_Category.cs" />
+    <Compile Include="Migrations\201802060713393_validation_added_to_Category.Designer.cs">
+      <DependentUpon>201802060713393_validation_added_to_Category.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802060716429_validation_added_to_City.cs" />
+    <Compile Include="Migrations\201802060716429_validation_added_to_City.Designer.cs">
+      <DependentUpon>201802060716429_validation_added_to_City.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802060717557_validation_added_to_Image.cs" />
+    <Compile Include="Migrations\201802060717557_validation_added_to_Image.Designer.cs">
+      <DependentUpon>201802060717557_validation_added_to_Image.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802060723135_validation_added_to_Person.cs" />
+    <Compile Include="Migrations\201802060723135_validation_added_to_Person.Designer.cs">
+      <DependentUpon>201802060723135_validation_added_to_Person.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802060731225_validation_added_to_Profession.cs" />
+    <Compile Include="Migrations\201802060731225_validation_added_to_Profession.Designer.cs">
+      <DependentUpon>201802060731225_validation_added_to_Profession.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802060741326_validation_added_to_Professional.cs" />
+    <Compile Include="Migrations\201802060741326_validation_added_to_Professional.Designer.cs">
+      <DependentUpon>201802060741326_validation_added_to_Professional.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802060743147_validation_added_to_State.cs" />
+    <Compile Include="Migrations\201802060743147_validation_added_to_State.Designer.cs">
+      <DependentUpon>201802060743147_validation_added_to_State.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802061045067_price_added_to_EventProfessional.cs" />
+    <Compile Include="Migrations\201802061045067_price_added_to_EventProfessional.Designer.cs">
+      <DependentUpon>201802061045067_price_added_to_EventProfessional.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802061337107_EventProfessional_Fk_added_to_AppEvent.cs" />
+    <Compile Include="Migrations\201802061337107_EventProfessional_Fk_added_to_AppEvent.Designer.cs">
+      <DependentUpon>201802061337107_EventProfessional_Fk_added_to_AppEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802070740053_profile_added_to_Person.cs" />
+    <Compile Include="Migrations\201802070740053_profile_added_to_Person.Designer.cs">
+      <DependentUpon>201802070740053_profile_added_to_Person.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802070831050_ProfileIdChangedToString.cs" />
+    <Compile Include="Migrations\201802070831050_ProfileIdChangedToString.Designer.cs">
+      <DependentUpon>201802070831050_ProfileIdChangedToString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802070944111_Profile_whocreated_added.cs" />
+    <Compile Include="Migrations\201802070944111_Profile_whocreated_added.Designer.cs">
+      <DependentUpon>201802070944111_Profile_whocreated_added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802071052507_Pesel_calidation_deleted.cs" />
+    <Compile Include="Migrations\201802071052507_Pesel_calidation_deleted.Designer.cs">
+      <DependentUpon>201802071052507_Pesel_calidation_deleted.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802091007578_Rola_Added_To_EventProfessional.cs" />
+    <Compile Include="Migrations\201802091007578_Rola_Added_To_EventProfessional.Designer.cs">
+      <DependentUpon>201802091007578_Rola_Added_To_EventProfessional.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803190809001_image_added_comment_whoAdded.cs" />
+    <Compile Include="Migrations\201803190809001_image_added_comment_whoAdded.Designer.cs">
+      <DependentUpon>201803190809001_image_added_comment_whoAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803201218391_date_added_to_AppEvent.cs" />
+    <Compile Include="Migrations\201803201218391_date_added_to_AppEvent.Designer.cs">
+      <DependentUpon>201803201218391_date_added_to_AppEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803201237397_guid_added_to_AppEvent.cs" />
+    <Compile Include="Migrations\201803201237397_guid_added_to_AppEvent.Designer.cs">
+      <DependentUpon>201803201237397_guid_added_to_AppEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804030904219_comment_eventComment_added.cs" />
+    <Compile Include="Migrations\201804030904219_comment_eventComment_added.Designer.cs">
+      <DependentUpon>201804030904219_comment_eventComment_added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804090746171_eventComment_Who_added.cs" />
+    <Compile Include="Migrations\201804090746171_eventComment_Who_added.Designer.cs">
+      <DependentUpon>201804090746171_eventComment_Who_added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804090818404_eventComment_Who_drop.cs" />
+    <Compile Include="Migrations\201804090818404_eventComment_Who_drop.Designer.cs">
+      <DependentUpon>201804090818404_eventComment_Who_drop.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804110555049_eventComment_drop.cs" />
+    <Compile Include="Migrations\201804110555049_eventComment_drop.Designer.cs">
+      <DependentUpon>201804110555049_eventComment_drop.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804110559503_AppEvent-Comment_OneToMany.cs" />
+    <Compile Include="Migrations\201804110559503_AppEvent-Comment_OneToMany.Designer.cs">
+      <DependentUpon>201804110559503_AppEvent-Comment_OneToMany.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804111123500_EventPro_Stars_changed_to_Importance.cs" />
+    <Compile Include="Migrations\201804111123500_EventPro_Stars_changed_to_Importance.Designer.cs">
+      <DependentUpon>201804111123500_EventPro_Stars_changed_to_Importance.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -322,6 +423,7 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\AppEvent.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\EventImage.cs" />
     <Compile Include="Models\EventProfessional.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -342,6 +444,11 @@
     <Compile Include="ViewModels\CityFormViewModel.cs" />
     <Compile Include="ViewModels\CityStateViewModel.cs" />
     <Compile Include="ViewModels\AppEventFormViewModel.cs" />
+    <Compile Include="ViewModels\EventProfessionalForm.cs" />
+    <Compile Include="ViewModels\ListOfProInvsViewModel.cs" />
+    <Compile Include="ViewModels\ProfessionalProfileViewModel.cs" />
+    <Compile Include="ViewModels\ProfileViewModel.cs" />
+    <Compile Include="ViewModels\UserProfileViewModel.cs" />
     <Compile Include="ViewModels\ProfessionalFormViewModel.cs" />
     <Compile Include="ViewModels\ProfessionFormViewModel.cs" />
   </ItemGroup>
@@ -349,6 +456,8 @@
     <Content Include="Content\bootstrap-lumen.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\logo.jpg" />
+    <Content Include="Content\Images\page-landing-page.jpeg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -358,6 +467,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="ClassDiagram8.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -424,9 +534,40 @@
     <Content Include="Views\Professional\Index.cshtml" />
     <Content Include="Views\AppEvents\ProsByCategory.cshtml" />
     <Content Include="Views\Professional\ListByProfessions.cshtml" />
+    <Content Include="Views\AppEvents\EventProfessionalForm.cshtml" />
+    <Content Include="Views\Manage\userProfileForm.cshtml" />
+    <Content Include="Views\Manage\professionalProfileForm.cshtml" />
+    <Content Include="Views\Profiles\Index.cshtml" />
+    <Content Include="Views\Profiles\ProfileForm.cshtml" />
+    <Content Include="Views\Manage\IndexWithRoleChoose.cshtml" />
+    <Content Include="Views\Manage\IndexCreateUserProfile.cshtml" />
+    <Content Include="Views\Manage\IndexCreateProfessionalProfile.cshtml" />
+    <Content Include="Views\Manage\IndexUserDashboard.cshtml" />
+    <Content Include="Views\Manage\IndexProfessionalDashboard.cshtml" />
+    <Content Include="Views\Manage\ListOfProInvs.cshtml" />
+    <Content Include="Views\Manage\ListOfAcceptedEvents.cshtml" />
+    <Content Include="Views\AppEvents\AppEventDetailsForPro.cshtml" />
+    <Content Include="Views\AppEvents\AppEventDetailsForProFromAcceptedEvents.cshtml" />
+    <Content Include="Views\Profiles\ProDetailProfile.cshtml" />
+    <Content Include="Views\Profiles\AddImgProfile.cshtml" />
+    <Content Include="Views\AppEvents\EventProfessionalFormFromPro.cshtml" />
+    <Content Include="Views\AppEvents\AppEventDetailsForProFromAcceptedEvents2.cshtml" />
+    <Content Include="Views\Manage\ListInvFromProToEvent.cshtml" />
+    <Content Include="Views\Manage\ListOfAcceptedEventsForAppUser.cshtml" />
+    <Content Include="Views\AppEvents\AppEventDetailsFormBackToManage.cshtml" />
+    <Content Include="Views\AppEvents\DetailsBackToListInvFromToEvent.cshtml" />
+    <Content Include="Views\Profiles\UserDetailProfile.cshtml" />
+    <Content Include="Views\Profiles\UserDetailProfileForPro.cshtml" />
+    <Content Include="Views\Cities\IndexList.cshtml" />
+    <Content Include="Views\Professions\IndexList.cshtml" />
+    <Content Include="Views\Categories\IndexList.cshtml" />
+    <Content Include="Views\AppEvents\IndexEventsList.cshtml" />
+    <Content Include="Views\Professional\ListOfProsForAdmin.cshtml" />
+    <Content Include="Views\Professional\ListOfProsForProAndAppUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\EventComments\" />
     <Folder Include="Views\EventImages\" />
   </ItemGroup>
   <ItemGroup>
@@ -526,6 +667,81 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802020754500_Professional_CurrentIdUser_upgrade.resx">
       <DependentUpon>201802020754500_Professional_CurrentIdUser_upgrade.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802060706325_validation_added_to_Address.resx">
+      <DependentUpon>201802060706325_validation_added_to_Address.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802060712131_validation_upgradedAddress_AppEvent.resx">
+      <DependentUpon>201802060712131_validation_upgradedAddress_AppEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802060713393_validation_added_to_Category.resx">
+      <DependentUpon>201802060713393_validation_added_to_Category.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802060716429_validation_added_to_City.resx">
+      <DependentUpon>201802060716429_validation_added_to_City.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802060717557_validation_added_to_Image.resx">
+      <DependentUpon>201802060717557_validation_added_to_Image.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802060723135_validation_added_to_Person.resx">
+      <DependentUpon>201802060723135_validation_added_to_Person.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802060731225_validation_added_to_Profession.resx">
+      <DependentUpon>201802060731225_validation_added_to_Profession.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802060741326_validation_added_to_Professional.resx">
+      <DependentUpon>201802060741326_validation_added_to_Professional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802060743147_validation_added_to_State.resx">
+      <DependentUpon>201802060743147_validation_added_to_State.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802061045067_price_added_to_EventProfessional.resx">
+      <DependentUpon>201802061045067_price_added_to_EventProfessional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802061337107_EventProfessional_Fk_added_to_AppEvent.resx">
+      <DependentUpon>201802061337107_EventProfessional_Fk_added_to_AppEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802070740053_profile_added_to_Person.resx">
+      <DependentUpon>201802070740053_profile_added_to_Person.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802070831050_ProfileIdChangedToString.resx">
+      <DependentUpon>201802070831050_ProfileIdChangedToString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802070944111_Profile_whocreated_added.resx">
+      <DependentUpon>201802070944111_Profile_whocreated_added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802071052507_Pesel_calidation_deleted.resx">
+      <DependentUpon>201802071052507_Pesel_calidation_deleted.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802091007578_Rola_Added_To_EventProfessional.resx">
+      <DependentUpon>201802091007578_Rola_Added_To_EventProfessional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803190809001_image_added_comment_whoAdded.resx">
+      <DependentUpon>201803190809001_image_added_comment_whoAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803201218391_date_added_to_AppEvent.resx">
+      <DependentUpon>201803201218391_date_added_to_AppEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803201237397_guid_added_to_AppEvent.resx">
+      <DependentUpon>201803201237397_guid_added_to_AppEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804030904219_comment_eventComment_added.resx">
+      <DependentUpon>201804030904219_comment_eventComment_added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804090746171_eventComment_Who_added.resx">
+      <DependentUpon>201804090746171_eventComment_Who_added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804090818404_eventComment_Who_drop.resx">
+      <DependentUpon>201804090818404_eventComment_Who_drop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804110555049_eventComment_drop.resx">
+      <DependentUpon>201804110555049_eventComment_drop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804110559503_AppEvent-Comment_OneToMany.resx">
+      <DependentUpon>201804110559503_AppEvent-Comment_OneToMany.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804111123500_EventPro_Stars_changed_to_Importance.resx">
+      <DependentUpon>201804111123500_EventPro_Stars_changed_to_Importance.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

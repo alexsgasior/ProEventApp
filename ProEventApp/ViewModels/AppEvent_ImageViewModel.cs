@@ -10,6 +10,9 @@ namespace ProEventApp.ViewModels
     {
         public AppEvent Event { get; set; }
         public IEnumerable<EventImage> EventImages { get; set; }
+        public IEnumerable<EventProfessional> EventProfessionals { get; set; }
 
+        public IEnumerable<Comment> Comments{ get; set; }
+        public Comment Comment { get; set; }
     }
 }

@@ -1,0 +1,73 @@
+﻿@using WebGrease.Css.Extensions
+@model ProEventApp.ViewModels.CityStateViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+
+
+<h2>Cities</h2>
+@if (!Model.Cities.Any() && !Model.States.Any())
+{
+    <p>We don't have any States and Cities added yet.</p>
+    
+}
+else
+{
+    
+    <table class="table table-bordered table-hover table-dark table-striped">
+        <thead class="bg-primary">
+            <tr>
+                <th>City</th>
+                <th>State</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var city in Model.Cities)
+            {
+                <tr>
+                    <td>@city.Name</td>
+                    <td>@city.State.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h2>States</h2>
+    if (!Model.States.Any())
+    {
+        <p>We don't have any States yet.</p>
+    }
+    else
+    {
+
+        
+
+
+        <table class="table table-bordered table-hover table-dark table-striped">
+            <thead class="bg-primary">
+                <tr>
+                    <th>State</th>
+                 </tr>
+            </thead>
+            <tbody>
+                @foreach (var state in Model.States)
+                {
+                    <tr>
+                        <td>@state.Name</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+
+    }
+
+
+}
+

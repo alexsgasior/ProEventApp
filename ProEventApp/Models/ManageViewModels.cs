@@ -12,6 +12,18 @@ namespace ProEventApp.Models
         public string PhoneNumber { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
+        //public EventProfessional EventProfessional { get; set; }
+        public IEnumerable<EventProfessional> EventProfessionals { get; set; }
+        //public IEnumerable<AppEvent> Events { get; set; }
+        //public AppEvent Event { get; set; }
+        public IEnumerable<InvitationStatus> InvitationStatuses { get; set; }
+        public IEnumerable<EventImage> EventImages { get; set; }
+        public IEnumerable<AppEvent> AppEvents { get; set; }
+        public Professional Professional { get; set; }
+        public AppUser AppUser { get; set; }
+        public Profile Profile { get; set; }
+        public IEnumerable<ProfileImage> ProfileImages { get; set; }
+
     }
 
     public class ManageLoginsViewModel

@@ -1,0 +1,123 @@
+﻿@model ProEventApp.Models.IndexViewModel
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+
+
+
+
+<div class="profile_data">
+    <div>
+        @foreach (var img in Model.ProfileImages)
+        {
+            <img src="data:image;base64,@System.Convert.ToBase64String(img.Image.Bytes)" width="250" height="250" />
+        }
+    </div>
+    <div>
+        <h3><span style="color: red">Name: </span>@Model.Professional.Name</h3>
+        <h3><span style="color: red">Surname: </span> @Model.Professional.Surname</h3>
+        <h3><span style="color: red">Company: </span>@Model.Professional.CompanyName</h3>
+        <h3><span style="color: red">Profession: </span> @Model.Professional.Profession.Name</h3>
+        <h3><span style="color: red">Category: </span> @Model.Professional.Profession.Category.Name</h3>
+        <h3><span style="color: red">Company site: </span> @Model.Professional.CompanyWWW</h3>
+    </div>
+</div>
+
+
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div class="container1">
+    <div>       
+        @if (Model.HasPassword)
+        {
+            @Html.ActionLink("Change your password", "ChangePassword",null,new {@class="btn btn-primary"})
+        }
+        else
+        {
+            @Html.ActionLink("Create", "SetPassword", null, new { @class = "btn btn-primary" })
+        }
+    </div>
+    <div>
+        <p>
+            @Html.ActionLink(linkText: "List of accepted events", actionName: "ListOfAcceptedEvents", routeValues: null, htmlAttributes: new {@class = "btn btn-primary"})
+        </p>
+    </div>
+
+    <div>
+        <p>
+            @Html.ActionLink(linkText: "List of invitations", actionName: "ListProInv", routeValues: null, htmlAttributes: new {@class = "btn btn-primary"})
+        </p>
+    </div>
+
+    <div>
+        <p>
+            @Html.ActionLink(linkText: "Your Profile", actionName: "ProDetailProfile", routeValues: null, htmlAttributes: new {@class = "btn btn-primary"}, controllerName: "Profiles")
+        </p>
+    </div>
+
+
+
+</div>
+<h2>Events which you may be interested in taking part in:</h2>
+<div class="list-of-events-in-pro-category">
+    <table class="table table-bordered table-hover table-dark table-striped">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Details</th>
+                <th>Send your offer</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var _event in Model.AppEvents)
+        {
+            <tr>
+                <td>@Html.ActionLink(_event.Name, "Edit", "AppEvents", new { id = _event.Id }, null)</td>
+
+                <td>@_event.Description</td>
+
+                <td>@_event.Category.Name</td>
+
+                @*<td>@Html.ActionLink(linkText: "Details", actionName: "Details", controllerName: "AppEvents", routeValues: new { @id = _event.Id })Details</td>*@
+                <td><a href="@Url.Action("DetailsForPro","AppEvents",new {_event.Id})">Details</a></td>
+
+                <td>@Html.ActionLink("Send your offer", "NewInvToEventFromPro", "AppEvents", new { id = _event.Id }, new { onclick = "return confirm('Are you sure you want to send offer to this event?');" })</td>
+
+            </tr>
+    }
+        </tbody>
+    </table>
+    
+
+</div>
+
+
+<style>
+    .container1 {
+        display: flex;
+        align-items: center;
+        display: inline-block;
+        width: 70%;
+    }
+     .container1 > div {
+         margin: 10px;
+         display: inline-block;
+         position:center;
+     }
+
+     .profile_data {
+         display: flex;
+     }
+    .profile_data > div {
+        margin: 10px;
+        display: inline-block;
+    }
+    #red {
+        color: red;
+    }
+
+</style>
+

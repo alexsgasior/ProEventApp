@@ -1,0 +1,51 @@
+﻿@model ProEventApp.ViewModels.EventProfessionalForm
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Event</h2>
+@using (Html.BeginForm("SaveProfessionalToEvent", "AppEvents"))
+{
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.EventProfessional.Comment)
+        @Html.TextBoxFor(m => m.EventProfessional.Comment, new { @class = "form-control" })
+    </div>
+    <div>
+        @Html.LabelFor(m => m.EventProfessional.Price)
+        @Html.TextBoxFor(m => m.EventProfessional.Price, new { @class = "form-control" })
+    </div>
+    <div>
+        @Html.LabelFor(m => m.EventProfessional.Importance)
+        @Html.TextBoxFor(m => m.EventProfessional.Importance, new { @class = "form-control" })
+    </div>
+    @*<div class="form-group">
+        @Html.LabelFor(m => m.EventProfessional.InvitationStatusId)
+        @Html.DropDownListFor(m => m.EventProfessional.InvitationStatusId, new SelectList(Model.InvitationStatuses, "Id", "Name"), "Select category", new { @class = "form-control" })
+    </div>*@
+
+    @Html.HiddenFor(m => m.EventProfessional.Id)
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+
+<br />
+<div>
+    <p>
+        @Html.ActionLink(linkText: "Back", actionName: "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
+    </p>
+</div>
+
+
+
+<style>
+
+    .warning {
+        color: red;
+    }
+</style>
+
+@section	scripts	{
+    @Scripts.Render("~/bundles/jqueryval")
+}

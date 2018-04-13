@@ -7,6 +7,7 @@ using ProEventApp.Models;
 
 namespace ProEventApp.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private ApplicationDbContext _context;

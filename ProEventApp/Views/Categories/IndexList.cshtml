@@ -1,0 +1,33 @@
+﻿@model IEnumerable<ProEventApp.Models.Category>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Categories</h2>
+@if (!Model.Any())
+{
+    <p>We don't have any categories yet.</p>
+    
+}
+else
+{
+    <table class="table table-bordered table-hover table-dark table-striped">
+        <thead class="bg-primary">
+        <tr>
+            <th>Category</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var category in Model)
+        {
+            <tr>
+                <td>@category.Name</td>
+                <td>@category.Description</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+

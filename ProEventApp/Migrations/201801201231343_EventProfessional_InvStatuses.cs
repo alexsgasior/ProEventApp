@@ -13,7 +13,7 @@ namespace ProEventApp.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Comment = c.String(),
-                        Stars = c.Double(nullable: false),
+                        Importance = c.Double(nullable: false),
                         ProfessionalId = c.Int(nullable: false),
                         InvitationStatusId = c.Int(nullable: false),
                     })

@@ -1,0 +1,40 @@
+﻿@model ProEventApp.Models.IndexViewModel
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<h2>Your dashboard</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <h4>Manage your account from here</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Password:</dt>
+        <dd>
+            [
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("Change your password", "ChangePassword")
+            }
+            else
+            {
+                @Html.ActionLink("Create", "SetPassword")
+            }
+            ]
+        </dd>
+        <dt>External Logins:</dt>
+        <dd>
+            @Model.Logins.Count [
+            @Html.ActionLink("Manage", "ManageLogins") ]
+        </dd>
+
+
+    </dl>
+</div>
+
+<div>
+    <p>
+        @Html.ActionLink("Create your Professional Profile", "NewProfile", "Manage", null, new { @class = "btn btn-primary" })
+    </p>
+</div>

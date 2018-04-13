@@ -1,0 +1,77 @@
+﻿@model ProEventApp.ViewModels.AppEvent_ImageViewModel
+@{
+    ViewBag.Title = "AppEventDetailsForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="background: rgba(255, 0, 0, 0.2);">
+
+    <h1>
+        @Model.Event.Name
+    </h1>
+
+    @foreach (var img in Model.EventImages)
+    {
+        <img src="data:image;base64,@System.Convert.ToBase64String(img.Image.Bytes)" width="250" height="250" />
+        <p>@img.Image.Comment</p>
+    }
+    <h3>
+        @Model.Event.Description
+    </h3>
+    <h4>
+        Category of the event: @Model.Event.Category.Name
+    </h4>
+
+    <h4>Location of the event:</h4>
+    <p>
+        City: @Model.Event.City.Name
+    </p>
+    <p>
+        Street: @Model.Event.Street
+    </p>
+    <p>
+        House number: @Model.Event.HouseNumber
+    </p>
+
+
+    <table class="table table-bordered table-hover table-dark table-striped">
+        <thead class="bg-primary">
+            <tr>
+                <th>Comment</th>
+                <th>Who</th>
+                <th>Added</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var comment in Model.Comments)
+            {
+                <tr>
+                    <td>@comment.Content</td>
+                    <td>@comment.Who</td>
+                    <td>@comment.DateCreated</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h2>New comment</h2>
+    @using (Html.BeginForm("SaveCommentToEvent", "AppEvents"))
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.Comment.Content)
+            @Html.TextBoxFor(m => m.Comment.Content, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Comment.Content)
+        </div>
+
+        @Html.HiddenFor(m => m.Comment.Id)
+        <button type="submit" class="btn btn-primary">Comment</button>
+    }
+
+    <br />
+    <div>
+        <p>
+            @Html.ActionLink(linkText: "Back", actionName: "ListProInv", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" }, controllerName: "Manage")
+        </p>
+    </div>
+
+
+</div>

@@ -105,12 +105,6 @@ namespace ProEventApp.Controllers
             return View(categories);
         }
 
-
-
-        // GET: EventImages
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
+        
     }
 }

@@ -1,0 +1,57 @@
+﻿@model ProEventApp.ViewModels.ProfileViewModel
+
+
+
+<div class="card mb-3 container1">
+    <h2 class="card-header">
+        @Model.AppUser.Name @Model.AppUser.Surname
+        <h4>Prefered name: @Model.Profile.PreferedName</h4>
+    </h2>
+    <div class="card-body">
+
+        @foreach (var img in Model.ProfileImages)
+        {
+            <img src="data:image;base64,@System.Convert.ToBase64String(img.Image.Bytes)" width="250" height="250" />
+        }
+
+
+        <div class="card-body">
+            <p class="card-text">About: @Model.Profile.About</p>
+        </div>
+
+        <h5 class="card-title">Phone: @Model.AppUser.Phone <br /> e-mail: @Model.AppUser.Email </h5>
+    </div>
+
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Motto: @Model.Profile.Motto</li>>
+    </ul>
+    <div class="card-body">
+        @Html.ActionLink("Change profile's photo", "AddImg", "Profiles", new { id = @Model.Profile.Id }, new { onclick = "return confirm('Are you sure you want to change your profile photo?');" })
+    </div>
+
+</div>
+
+@*<div>
+    @Html.ActionLink(linkText: "Back", actionName: "ListInvFromProToEvent", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" }, controllerName: "Manage")
+</div>*@
+
+<div>
+    @Html.ActionLink(linkText: "Back to dashboard", actionName: "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" }, controllerName: "Manage")
+</div>
+
+
+
+<style>
+    .container1 {
+        display: flex;
+        align-items: center;
+        display: inline-block;
+        width: 70%;
+    }
+    .container1 > div {
+        margin: 10px;
+        display: inline-block;
+        position:center;
+    }
+</style>
+

@@ -1,0 +1,37 @@
+﻿@using System.Security.Cryptography
+@using Microsoft.Ajax.Utilities
+@model ProEventApp.ViewModels.ListOfProInvsViewModel
+@{
+    ViewBag.Title = "ListProInv";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (Model.EventProfessionals.Any())
+{
+    <h2>Event to which you are invited for:</h2>
+
+foreach (var item in Model.EventProfessionals)
+ {
+     <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+         <div class="card-header">
+             @Html.ActionLink(linkText: "Show event details", actionName: "Details", routeValues: new {id = item.AppEventId}, htmlAttributes: new {@class = "btn btn-primary"}, controllerName: "AppEvents")
+             @Html.ActionLink(linkText: "Show professional's profile", actionName: "ProDetailProfileSpecific", routeValues: new {id = item.ProfessionalId}, htmlAttributes: new {@class = "btn btn-primary"}, controllerName: "Profiles")
+         </div>
+         <div class="card-body">
+             <h4 class="card-title">@item.Price pln</h4>
+             <p class="card-text">@item.Comment</p>
+         </div>
+         @Html.ActionLink(linkText: "ACCEPT", actionName: "AppUserChangeInvStatusToAccept", routeValues: new {id = item.Id}, htmlAttributes: new {@class = "btn btn-primary"})
+         @Html.ActionLink(linkText: "DECLINE", actionName: "AppUserChangeInvStatusToDecline", routeValues: new {id = item.Id}, htmlAttributes: new {@class = "btn btn-primary"})
+     </div>
+    }
+}
+else
+{
+    <h1>You do not have any offers yet</h1>
+}
+
+<p>
+    @Html.ActionLink("Back to dashboard","Index","Manage",new{ @class="btn btn-primary"})
+</p>
+
+
