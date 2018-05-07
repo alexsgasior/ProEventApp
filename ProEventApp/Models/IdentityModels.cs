@@ -27,7 +27,11 @@ namespace ProEventApp.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<Comment> Comments { get; set; }
+        public DbSet<EventComment> Comments { get; set; }
+
+        public DbSet<Comment> UPComments { get; set; }
+
+        public DbSet<UserProComment> UserProComments { get; set; }
         //public DbSet<EventComment> EventComments { get; set; }
         public DbSet<Person> Persons { get; set; }
         public DbSet<Professional> Professionals { get; set; }

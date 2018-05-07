@@ -10,6 +10,7 @@ namespace ProEventApp.ViewModels
     {
         public IEnumerable<InvitationStatus> InvitationStatuses { get; set; }
         public EventProfessional EventProfessional { get; set; }
+        public ScoringRange ScoringRange { get; set; }
 
     }
 }

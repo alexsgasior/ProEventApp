@@ -34,8 +34,8 @@
             @Html.ActionLink("Create", "SetPassword", null, new { @class = "btn btn-primary" })
         }
     </div>
-    
-    
+
+
     <div>
         <p>
             @Html.ActionLink(linkText: "Offers from professionals", actionName: "ListInvFromProToEvent", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
@@ -48,7 +48,13 @@
     </div>
     <div>
         <p>
-            @Html.ActionLink(linkText: "Your Profile", actionName: "UserDetailProfileSpecific", routeValues: new {id=@Model.AppUser.Id}, htmlAttributes: new { @class = "btn btn-primary" }, controllerName: "Profiles")
+            @Html.ActionLink(linkText: "Your Profile", actionName: "UserDetailProfileSpecific", routeValues: new { id = @Model.AppUser.Id }, htmlAttributes: new { @class = "btn btn-primary" }, controllerName: "Profiles")
+        </p>
+    </div>
+
+    <div>
+        <p>
+            @Html.ActionLink(linkText: "Archive of events", actionName: "EventsArchive", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" }, controllerName: "AppEvents")
         </p>
     </div>
 

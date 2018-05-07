@@ -1,43 +1,48 @@
 ﻿@model ProEventApp.ViewModels.AppEvent_ImageViewModel
 @{
-    ViewBag.Title = "AppEventDetailsForm";
+    ViewBag.Title = "DeatilsEventArchiveForPro";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div style="background: rgba(255, 0, 0, 0.2);">
     <div id="myMainContainer">
-        <h1>
-            @Model.Event.Name
+        <h1 style="text-align: center;color: red">        
+            On this event you made: @Model.EventProfessional.Price pln!
         </h1>
 
-        @foreach (var img in Model.EventImages)
-        {
-            <img src="data:image;base64,@System.Convert.ToBase64String(img.Image.Bytes)" width="250" height="250"/>
-            <p>@img.Image.Comment</p>
-        }
-        <h2>
+        <h1 style="text-align: center">
+            @Model.Event.Name
+        </h1>
+        <div style="align-items: center">
+            @foreach (var img in Model.EventImages)
+            {
+                <img src="data:image;base64,@System.Convert.ToBase64String(img.Image.Bytes)" width="250" height="250"/>
+                <p>@img.Image.Comment</p>
+            }
+        </div>
+        <h2 style="text-align: center">
             When: @Model.Event.Date
         </h2>
-        <h3>
+        <h3 style="text-align: center">
             @Model.Event.Description
         </h3>
-        <h4>
+        <h4 style="text-align: center">
             Category of the event: @Model.Event.Category.Name
         </h4>
 
-        <h4>Location of the event:</h4>
-        <p>
+        <h4 style="text-align: center">
+            Location of the event:
+        </h4>
+        <p style="text-align: center">
             City: @Model.Event.City.Name
         </p>
-        <p>
+        <p style="text-align: center">
             Street: @Model.Event.Street
         </p>
-        <p>
+        <p style="text-align: center">
             House number: @Model.Event.HouseNumber
         </p>
 
-        <p>
-            @Html.ActionLink(linkText: "User's profile", actionName: "UserDetailProfileSpecificForPro", routeValues: new {id = @Model.Event.AppUser.Id}, htmlAttributes: new {@class = "btn btn-primary"}, controllerName: "Profiles")
-        </p>
+
     </div>
     <table class="table table-bordered table-hover table-dark table-striped">
         <thead class="bg-primary">
@@ -59,7 +64,7 @@
         </tbody>
     </table>
 
-    <h2>New comment</h2>
+    @*<h2>New comment</h2>
     @using (Html.BeginForm("SaveCommentToEvent", "AppEvents"))
     {
         <div class="form-group">
@@ -70,15 +75,20 @@
 
         @Html.HiddenFor(m => m.EventComment.Id)
         <button type="submit" class="btn btn-primary">Comment</button>
-    }
+    }*@
 
-    <br/>
-    <div>
-        <p>
-            @Html.ActionLink(linkText: "Back", actionName: "ListOfAcceptedEvents", routeValues: null, htmlAttributes: new {@class = "btn btn-primary"}, controllerName: "Manage")
-        </p>
-    </div>
+    <hr/>
+    
+    <p id="myMainContainer">
+        @Html.ActionLink("Find Your Pro!", "FindProsByCategory", "AppEvents", new { id = @Model.Event.CategoryId }, new { @class = "btn btn-primary" })
+    </p>
 
+
+    <p>
+        <button type="button" class="btn btn-primary btn-lg" onclick="location.href = '@Url.Action("EventsArchive", "AppEvents")'">Back to the archive</button>
+    </p>
+    
+    
 
 </div>
 
@@ -88,6 +98,4 @@
         text-align: center;
     }
 </style>
-
-
 

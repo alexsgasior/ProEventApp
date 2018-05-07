@@ -4,34 +4,38 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div style="background: rgba(255, 0, 0, 0.2);">
-    <h1>
-        @Model.Event.Name
-    </h1>
+    <div id="myMainContainer">
+        <h1>
+            @Model.Event.Name
+        </h1>
 
-    @foreach (var img in Model.EventImages)
-    {
-        <img src="data:image;base64,@System.Convert.ToBase64String(img.Image.Bytes)" width="250" height="250" />
-        <p>@img.Image.Comment</p>
-    }
-    <h3>
-        @Model.Event.Description
-    </h3>
-    <h4>
-        Category of the event: @Model.Event.Category.Name
-    </h4>
+        @foreach (var img in Model.EventImages)
+        {
+            <img src="data:image;base64,@System.Convert.ToBase64String(img.Image.Bytes)" width="250" height="250" />
+            <p>@img.Image.Comment</p>
+        }
+        <h2>
+            When: @Model.Event.Date
+        </h2>
+        <h3>
+            @Model.Event.Description
+        </h3>
+        <h4>
+            Category of the event: @Model.Event.Category.Name
+        </h4>
 
-    <h4>Location of the event:</h4>
-    <p>
-        City: @Model.Event.City.Name
-    </p>
-    <p>
-        Street: @Model.Event.Street
-    </p>
-    <p>
-        House number: @Model.Event.HouseNumber
-    </p>
+        <h4>Location of the event:</h4>
+        <p>
+            City: @Model.Event.City.Name
+        </p>
+        <p>
+            Street: @Model.Event.Street
+        </p>
+        <p>
+            House number: @Model.Event.HouseNumber
+        </p>
 
-
+    </div>
 
     <table class="table table-bordered table-hover table-dark table-striped">
         <thead class="bg-primary">
@@ -57,30 +61,40 @@
     @using (Html.BeginForm("SaveCommentToEvent", "AppEvents"))
     {
         <div class="form-group">
-            @Html.LabelFor(m => m.Comment.Content)
-            @Html.TextBoxFor(m => m.Comment.Content, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Comment.Content)
+            @Html.LabelFor(m => m.EventComment.Content)
+            @Html.TextBoxFor(m => m.EventComment.Content, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.EventComment.Content)
         </div>
 
-        @Html.HiddenFor(m => m.Comment.Id)
+        @Html.HiddenFor(m => m.EventComment.Id)
         <button type="submit" class="btn btn-primary">Comment</button>
     }
-    
-    <hr/>
 
-    <p>
-        <button type="button" class="btn btn-primary btn-lg" onclick="location.href = '@Url.Action("Index", "AppEvents")'">Back to your events</button>
+    <hr />
+
+    <p id="myMainContainer">
+        @Html.ActionLink("Find Your Pro!", "FindProsByCategory", "AppEvents", new { id = @Model.Event.CategoryId }, new { @class = "btn btn-primary" })
     </p>
+    
     <p>
         @Html.ActionLink("Edit", "Edit", "AppEvents", new { id = @Model.Event.Id }, new { @class = "btn btn-primary" })
         @*@Html.ActionLink(linkText: "Edit", actionName: "Edit",  routeValues: new { id = @Model.Event.Id },controllerName:"AppEvents")*@
     </p>
+    
+
     <p>
-        @Html.ActionLink("Find Your Pro!", "FindProsByCategory", "AppEvents", new { id = @Model.Event.CategoryId }, new { @class = "btn btn-primary" })
+        <button type="button" class="btn btn-primary btn-lg" onclick="location.href = '@Url.Action("Index", "AppEvents")'">Back to your events</button>
     </p>
-
-
+    
 
 </div>
 
 
+<style>
+    #myMainContainer {
+        text-align: center;
+    }
+
+
+
+</style>

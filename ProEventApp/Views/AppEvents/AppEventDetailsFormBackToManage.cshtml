@@ -4,34 +4,37 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div style="background: rgba(255, 0, 0, 0.2);">
+    <div id="myMainContainer">
+        <h1>
+            @Model.Event.Name
+        </h1>
 
-    <h1>
-        @Model.Event.Name
-    </h1>
+        @foreach (var img in Model.EventImages)
+        {
+            <img src="data:image;base64,@System.Convert.ToBase64String(img.Image.Bytes)" width="250" height="250" />
+            <p>@img.Image.Comment</p>
+        }
+        <h2>
+            When: @Model.Event.Date
+        </h2>
+        <h3>
+            @Model.Event.Description
+        </h3>
+        <h4>
+            Category of the event: @Model.Event.Category.Name
+        </h4>
 
-    @foreach (var img in Model.EventImages)
-    {
-        <img src="data:image;base64,@System.Convert.ToBase64String(img.Image.Bytes)" width="250" height="250" />
-        <p>@img.Image.Comment</p>
-    }
-    <h3>
-        @Model.Event.Description
-    </h3>
-    <h4>
-        Category of the event: @Model.Event.Category.Name
-    </h4>
-
-    <h4>Location of the event:</h4>
-    <p>
-        City: @Model.Event.City.Name
-    </p>
-    <p>
-        Street: @Model.Event.Street
-    </p>
-    <p>
-        House number: @Model.Event.HouseNumber
-    </p>
-
+        <h4>Location of the event:</h4>
+        <p>
+            City: @Model.Event.City.Name
+        </p>
+        <p>
+            Street: @Model.Event.Street
+        </p>
+        <p>
+            House number: @Model.Event.HouseNumber
+        </p>
+    </div>
     @if (Model.EventProfessionals.Any())
     {
         <h2>Offers accepted to this event</h2>
@@ -45,11 +48,14 @@
                 </div>
                 <div class="card-body">
                     <h4 class="card-title">@item.Price pln</h4>
+                    <p class="card-text">Date: @item.DateOfJob</p>
                     <p class="card-text">@item.Comment</p>
                     <p>Offer send by: @item.Rola</p>
                     <p class="card-text">Professional's phone number: @item.Professional.Phone</p>
                     <p class="card-text">Professional's email: @item.Professional.Email</p>
+                    <p class="card-text" style="border: red 1px solid">Status: @item.InvitationStatus.Name</p>
                 </div>
+                @Html.ActionLink(linkText: "Done", actionName: "DecideIfJobDone", routeValues: new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary" }, controllerName: "Manage")
             </div>
         }
     }
@@ -77,38 +83,32 @@
         }
         </tbody>
     </table>
+    <div style="background-color:rgba(0, 0, 0, 0.3); ">
+        <h2>New comment</h2>
+        @using (Html.BeginForm("SaveCommentToEvent", "AppEvents"))
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.EventComment.Content,"Comment")
+                @Html.TextBoxFor(m => m.EventComment.Content, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.EventComment.Content)
+            </div>
 
-    <h2>New comment</h2>
-    @using (Html.BeginForm("SaveCommentToEvent", "AppEvents"))
-    {
-        <div class="form-group">
-            @Html.LabelFor(m => m.Comment.Content)
-            @Html.TextBoxFor(m => m.Comment.Content, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Comment.Content)
-        </div>
-
-        @Html.HiddenFor(m => m.Comment.Id)
-        <button type="submit" class="btn btn-primary">Comment</button>
-    }
-
-    <p>
-        <button type="button" class="btn btn-primary btn-lg" onclick="location.href = '@Url.Action("Index", "AppEvents")'">Back to your events</button>
+            @Html.HiddenFor(m => m.EventComment.Id)
+            <button type="submit" class="btn btn-primary">Comment</button>
+        }
+    </div>
+    <br/>
+    <p id="myMainContainer">
+        <button type="button" class="btn btn-primary btn-lg" onclick="location.href = '@Url.Action("Index", "AppEvents")'">Go to your events</button>
     </p>
-    <p>
-        @Html.ActionLink("Edit", "Edit", "AppEvents", new { id = @Model.Event.Id }, new { @class = "btn btn-primary" })
-        @*@Html.ActionLink(linkText: "Edit", actionName: "Edit",  routeValues: new { id = @Model.Event.Id },controllerName:"AppEvents")*@
-    </p>
-    <p>
-        @Html.ActionLink("Find Your Pro!", "FindProsByCategory", "AppEvents", new { id = @Model.Event.CategoryId }, new { @class = "btn btn-primary" })
-    </p>
+    
 
-    <div>
+    <div id="myMainContainer">
         <p>
-            @Html.ActionLink(linkText: "Back to the list", actionName: "ListOfAcceptedEventsForAppUser", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" }, controllerName: "Manage")
+            @Html.ActionLink(linkText: "Back to the list of accepted events", actionName: "ListOfAcceptedEventsForAppUser", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" }, controllerName: "Manage")
         </p>
     </div>
 
-    <br />
     <div>
         <p>
             @Html.ActionLink(linkText: "Back to the dashboard", actionName: "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" }, controllerName: "Manage")
@@ -117,6 +117,13 @@
 
 
 </div>
+
+
+<style>
+    #myMainContainer {
+        text-align: center;
+    }
+</style>
 
 
 @section	scripts	{

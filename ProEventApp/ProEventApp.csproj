@@ -416,6 +416,30 @@
     <Compile Include="Migrations\201804111123500_EventPro_Stars_changed_to_Importance.Designer.cs">
       <DependentUpon>201804111123500_EventPro_Stars_changed_to_Importance.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804130652033_Comment_UserProComment_added.cs" />
+    <Compile Include="Migrations\201804130652033_Comment_UserProComment_added.Designer.cs">
+      <DependentUpon>201804130652033_Comment_UserProComment_added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804130654080_Comment_UserProComment_added_1.cs" />
+    <Compile Include="Migrations\201804130654080_Comment_UserProComment_added_1.Designer.cs">
+      <DependentUpon>201804130654080_Comment_UserProComment_added_1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804130718227_date_added_to_EventProfessional.cs" />
+    <Compile Include="Migrations\201804130718227_date_added_to_EventProfessional.Designer.cs">
+      <DependentUpon>201804130718227_date_added_to_EventProfessional.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804130729552_done_added_to_EventPro.cs" />
+    <Compile Include="Migrations\201804130729552_done_added_to_EventPro.Designer.cs">
+      <DependentUpon>201804130729552_done_added_to_EventPro.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804131210469_Who_to_Comment.cs" />
+    <Compile Include="Migrations\201804131210469_Who_to_Comment.Designer.cs">
+      <DependentUpon>201804131210469_Who_to_Comment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804160846222_done_added_to_AppEvent.cs" />
+    <Compile Include="Migrations\201804160846222_done_added_to_AppEvent.Designer.cs">
+      <DependentUpon>201804160846222_done_added_to_AppEvent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -424,6 +448,7 @@
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\AppEvent.cs" />
     <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\EventComment.cs" />
     <Compile Include="Models\EventImage.cs" />
     <Compile Include="Models\EventProfessional.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -438,6 +463,7 @@
     <Compile Include="Models\RoleName.cs" />
     <Compile Include="Models\State.cs" />
     <Compile Include="Models\Status.cs" />
+    <Compile Include="Models\UserProComment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AppEvent_ImageViewModel.cs" />
@@ -564,6 +590,11 @@
     <Content Include="Views\AppEvents\IndexEventsList.cshtml" />
     <Content Include="Views\Professional\ListOfProsForAdmin.cshtml" />
     <Content Include="Views\Professional\ListOfProsForProAndAppUser.cshtml" />
+    <Content Include="Views\AppEvents\EventsArchive.cshtml" />
+    <Content Include="Views\AppEvents\AcceptedEvent.cshtml" />
+    <Content Include="Views\AppEvents\EventsArchiveForPro.cshtml" />
+    <Content Include="Views\AppEvents\DeatilsEventArchiveForPro.cshtml" />
+    <Content Include="Views\AppEvents\Calendar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -742,6 +773,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804111123500_EventPro_Stars_changed_to_Importance.resx">
       <DependentUpon>201804111123500_EventPro_Stars_changed_to_Importance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804130652033_Comment_UserProComment_added.resx">
+      <DependentUpon>201804130652033_Comment_UserProComment_added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804130654080_Comment_UserProComment_added_1.resx">
+      <DependentUpon>201804130654080_Comment_UserProComment_added_1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804130718227_date_added_to_EventProfessional.resx">
+      <DependentUpon>201804130718227_date_added_to_EventProfessional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804130729552_done_added_to_EventPro.resx">
+      <DependentUpon>201804130729552_done_added_to_EventPro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804131210469_Who_to_Comment.resx">
+      <DependentUpon>201804131210469_Who_to_Comment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804160846222_done_added_to_AppEvent.resx">
+      <DependentUpon>201804160846222_done_added_to_AppEvent.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

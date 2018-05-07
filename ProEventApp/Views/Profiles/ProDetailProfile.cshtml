@@ -8,12 +8,12 @@
         <h4>Prefered name: @Model.Profile.PreferedName</h4>
     </h2>
     <div class="card-body">
-        
+
         @foreach (var img in Model.ProfileImages)
         {
             <img src="data:image;base64,@System.Convert.ToBase64String(img.Image.Bytes)" width="250" height="250" />
         }
-        
+
 
         <div class="card-body">
             <p class="card-text">About: @Model.Profile.About</p>
@@ -26,12 +26,48 @@
     <ul class="list-group list-group-flush">
         <li class="list-group-item">Motto: @Model.Profile.Motto</li>>
     </ul>
-    <div class="card-body">
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
-        @Html.ActionLink("Change profile's photo", "AddImg", "Profiles", new { id = @Model.Profile.Id }, new { onclick = "return confirm('Are you sure you want to change your profile photo?');" })
+
+    @if (Model.UserProComments.Any())
+    {
+        <table class="table table-bordered table-hover table-dark table-striped">
+            <thead class="bg-primary">
+            <tr>
+                <th>Comment</th>
+                <th>Who</th>
+                <th>Added</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var comment in Model.UserProComments)
+            {
+            <tr>
+                <td>@comment.Comment.Content</td>
+                <td>@comment.Comment.DateCreated</td>
+                <td>@comment.Comment.Who</td>
+            </tr>
+            }
+            </tbody>
+        </table>
+    }
+    <div>
+        @using (Html.BeginForm("AddCommentToUser", "Profiles"))
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.Comment.Content)
+                @Html.TextBoxFor(m => m.Comment.Content, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Comment.Content)
+            </div>
+
+            @Html.HiddenFor(m => m.Comment.Id)
+            <button type="submit" class="btn btn-primary">Comment</button>
+        }
     </div>
-    
+
+
+    @*<div class="card-body">
+        @Html.ActionLink("Change profile's photo", "AddImg", "Profiles", new { id = @Model.Profile.Id }, new { onclick = "return confirm('Are you sure you want to change your profile photo?');" })
+    </div>*@
+
 </div>
 
 <div>

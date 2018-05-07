@@ -17,6 +17,8 @@ namespace ProEventApp.Models
         public int AppEventId { get; set; }
         public AppEvent AppEvent { get; set; }
         public int InvitationStatusId { get; set; }
+        public DateTime DateOfJob { get; set; }
+        public bool Done { get; set; }
         public string Rola { get; set; }
         
     }

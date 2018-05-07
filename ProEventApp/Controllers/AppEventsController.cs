@@ -94,11 +94,7 @@ namespace ProEventApp.Controllers
             return RedirectToAction("Index", "AppEvents");
         }
 
-
-
-
-
-
+        
         [Authorize(Roles = RoleName.AppUser)]
         public ActionResult NewInvToEvent(int id)
         {
@@ -134,6 +130,9 @@ namespace ProEventApp.Controllers
 
             var userIdToPass = User.Identity.GetUserId();
             var user = _context.Users.FirstOrDefault(u => u.Id == userIdToPass);
+            _eventProfessional.EventProfessional.Importance = Convert.ToDouble(_eventProfessional.ScoringRange); 
+            
+
             var appUserToPass = _context.AppUsers.SingleOrDefault(c => c.Id == user.AppUserId);
 
             var professionalToInv = _context.Professionals.SingleOrDefault(m => m.Id == id);            
@@ -147,6 +146,7 @@ namespace ProEventApp.Controllers
                 Comment = _eventProfessional.EventProfessional.Comment,
                 Importance = _eventProfessional.EventProfessional.Importance,
                 Price = _eventProfessional.EventProfessional.Price,
+                DateOfJob = eventToInv.Date,
                 ProfessionalId = professionalToInv.Id,
                 Professional = professionalToInv,
                 InvitationStatusId = /*_eventProfessional.EventProfessional.InvitationStatusId*/invStatus_Pending.Id,
@@ -385,6 +385,46 @@ namespace ProEventApp.Controllers
 
             return View("AppEventDetailsFormBackToManage", viewModel);
         }
+        [HttpGet]
+        [Authorize(Roles = RoleName.AppUser)]
+        public ActionResult DetailsAcceptedEvent(int id)
+        {
+            TempData["IdOfCurrentEvent"] = id;
+
+            var _event = _context.Events
+                .Include(m => m.Status).Include(m => m.Category)
+                .Include(m => m.AppUser).Include(m => m.City)
+                .SingleOrDefault(m => m.Id == id);
+
+            if (_event == null)
+            {
+                return HttpNotFound();
+            }
+
+            var _eventImages = _context.EventImages.Include(m => m.Image).Where(m => m.AppEventId == id).ToList();
+
+            var userId = User.Identity.GetUserId();
+            var _appUserId = _context.AppUsers.SingleOrDefault(m => m.CurrentUserId == userId).Id;
+            var comments = _context.Comments.Where(p => p.AppEventId == id).ToList();
+
+            var _eventsAccepted = _context.EventProfessionals.Include(m => m.AppEvent)
+                .Include(m => m.InvitationStatus).Include(m => m.Professional)
+                .Where(m => m.AppEvent.AppUserId == _appUserId)
+                .Where(m => m.AppEvent.Id == _event.Id)
+                .Where(m => m.InvitationStatusId == 2).ToList();
+
+            var viewModel = new AppEvent_ImageViewModel()
+            {
+                Event = _event,
+                EventImages = _eventImages,
+                EventProfessionals = _eventsAccepted,
+                Comments = comments
+            };
+
+            return View("AcceptedEvent", viewModel);
+        }
+
+
 
         [HttpGet]
         public ActionResult DetailsBackToListInvFromToEvent(int id)
@@ -442,12 +482,10 @@ namespace ProEventApp.Controllers
 
             if (_eventsAccepted.Any())
             {
-                return DetailsBackToManage(id);
+                return DetailsAcceptedEvent(id);
             }
 
-
-
-
+            
             var _eventImages = _context.EventImages.Include(m=>m.Image).Where(m=>m.AppEventId==id).ToList();
             var comments = _context.Comments.Where(p => p.AppEventId == id).ToList();
 
@@ -461,7 +499,54 @@ namespace ProEventApp.Controllers
             return View("AppEventDetailsForm",viewModel);
         }
 
-        public ActionResult SaveCommentToEvent(Comment comment)
+        [Authorize(Roles = RoleName.Professional)]
+        public ActionResult DetailsArchiveForPro(int id)
+        {
+            TempData["IdOfCurrentEvent"] = id;
+
+            var _event = _context.Events
+                .Include(m => m.Status).Include(m => m.Category)
+                .Include(m => m.AppUser).Include(m => m.City)
+                .SingleOrDefault(m => m.Id == id);
+
+            if (_event == null)
+            {
+                return HttpNotFound();
+            }
+
+            var userId = User.Identity.GetUserId();
+            var _appUserId = _context.Professionals.SingleOrDefault(m => m.CurrentUserId == userId).Id;
+
+            //var _eventsAccepted = _context.EventProfessionals.Include(m => m.AppEvent)
+            //    .Include(m => m.InvitationStatus).Include(m => m.Professional)
+            //    .Where(m => m.AppEvent.AppUserId == _appUserId)
+            //    .Where(m => m.AppEvent.Id == _event.Id)
+            //    .Where(m => m.InvitationStatusId == 2).ToList();
+
+            //if (_eventsAccepted.Any())
+            //{
+            //    return DetailsAcceptedEvent(id);
+            //}
+
+
+            var _eventImages = _context.EventImages.Include(m => m.Image).Where(m => m.AppEventId == id).ToList();
+            var comments = _context.Comments.Where(p => p.AppEventId == id).ToList();
+            var _evPro = _context.EventProfessionals.Where(e => e.ProfessionalId == _appUserId).Where(e=>e.Done==true).ToList();
+
+            var _evProIds = _evPro.SingleOrDefault(e => e.Id == _evPro.FirstOrDefault().Id);
+            var _eventProToPass = _context.EventProfessionals.SingleOrDefault(e => e.Id == _evProIds.Id);
+            var viewModel = new AppEvent_ImageViewModel()
+            {
+                Event = _event,
+                EventImages = _eventImages,
+                Comments = comments,
+                EventProfessional = _eventProToPass
+            };
+
+            return View("DeatilsEventArchiveForPro", viewModel);
+        }
+
+        public ActionResult SaveCommentToEvent(EventComment eventComment)
         {
             var id = Convert.ToInt32(TempData["IdOfCurrentEvent"]);
             
@@ -470,7 +555,7 @@ namespace ProEventApp.Controllers
             var userTeraz = _context.Users.FirstOrDefault(m => m.Id == currentId);
             var isUser = userTeraz.AppUserId != null;
             
-            if (comment.Id == 0)
+            if (eventComment.Id == 0)
             {
                 var appUserInDb = new AppUser();
                 var isProfessional = userTeraz.ProfessionalId != null;
@@ -486,21 +571,21 @@ namespace ProEventApp.Controllers
                 
                 if (isUser)
                 {
-                    comment.Who = appUserInDb.Name + " " + appUserInDb.Surname;
+                    eventComment.Who = appUserInDb.Name + " " + appUserInDb.Surname;
                 }
                 else
                 {
-                    comment.Who = proInDb.Name + " " + proInDb.Surname;
+                    eventComment.Who = proInDb.Name + " " + proInDb.Surname;
                 }
-                comment.DateCreated = DateTime.Now;
-                comment.AppEventId = id;
-                _context.Comments.Add(comment);
+                eventComment.DateCreated = DateTime.Now;
+                eventComment.AppEventId = id;
+                _context.Comments.Add(eventComment);
             }
             else
             {
-                var commentInDb = _context.Comments.SingleOrDefault(p => p.Id == comment.Id);
+                var commentInDb = _context.Comments.SingleOrDefault(p => p.Id == eventComment.Id);
 
-                commentInDb.Content = comment.Content;
+                commentInDb.Content = eventComment.Content;
             }
 
             _context.SaveChanges();
@@ -590,6 +675,55 @@ namespace ProEventApp.Controllers
             return View("AppEventDetailsForProFromAcceptedEvents2", viewModel);
         }
 
+        [Authorize(Roles = RoleName.AppUser + "," + RoleName.Professional)]
+        public ActionResult EventsArchive()
+        {
+            var currentLoggedId = User.Identity.GetUserId();
+            int idToQuery = 0;
+            var userLinkedtoLogged = new AppUser();
+
+
+            if (User.IsInRole(RoleName.AppUser))
+            {
+                userLinkedtoLogged = _context.AppUsers.SingleOrDefault(m => m.CurrentUserId == currentLoggedId);
+                idToQuery = userLinkedtoLogged.Id;
+
+                var _events = _context.Events.Where(e => e.Done == true)
+                    .Include(m => m.Status).Include(m => m.Category)
+                    .Include(m => m.AppUser).Include(m => m.City)
+                    .ToList().OrderBy(m => m.Status.Name)
+                    .Where(m => m.AppUserId == idToQuery);
+
+
+                return View("EventsArchive", _events);
+            }
+            var proLinkedToLogged = new Professional();
+            if (User.IsInRole(RoleName.Professional))
+            {
+                proLinkedToLogged = _context.Professionals.SingleOrDefault(m => m.CurrentUserId == currentLoggedId);
+                idToQuery = proLinkedToLogged.Id;
+
+                var _doneEvents = _context.EventProfessionals.Include(m => m.AppEvent).Where(m => m.Done==true)
+                    .Where(m => m.ProfessionalId == idToQuery).ToList();
+                var _doneEventIds = _doneEvents.Select(m => m.AppEventId).ToList();
+
+
+                //var _events = _context.Events.Where(e => e.Done == true)
+                //    .Include(m => m.Status).Include(m => m.Category)
+                //    .Include(m => m.AppUser).Include(m => m.City)
+                //    .Where(e=> _eventsDone.Contains(e.Id))
+                //    .ToList().OrderBy(m => m.Status.Name);
+
+                var _allEventsDoneByPro = _context.Events.Include(m => m.Status).Include(m => m.Category)
+                    .Include(m => m.AppUser).Include(m => m.City).Where(e => _doneEventIds.Contains(e.Id)).ToList();
+
+                return View("EventsArchive", _allEventsDoneByPro);
+            }
+
+            return ViewBag("No done events yet.");
+        }
+
+
         public ActionResult FindProsByCategory(int id)
         {
             var pros = _context.Professionals.Include(m=>m.Profession).Where(m => m.Profession.CategoryId == id).ToList();
@@ -603,7 +737,8 @@ namespace ProEventApp.Controllers
         [Authorize(Roles = RoleName.AppUser+","+RoleName.Admin+","+RoleName.Professional)]
         public ActionResult Index()
         {
-            var _allEvent = _context.Events.Include(m => m.Status).Include(m => m.Category).Include(m => m.AppUser)
+            var _allEvent = _context.Events.Where(e => e.Done == false)
+                .Include(m => m.Status).Include(m => m.Category).Include(m => m.AppUser)
                 .Include(m => m.City).OrderBy(m => m.Category.Name).ToList();
             if (User.IsInRole(RoleName.Professional))
             {
@@ -617,9 +752,45 @@ namespace ProEventApp.Controllers
             var userLinkedtoLogged = _context.AppUsers.SingleOrDefault(m => m.CurrentUserId == currentLoggedId);
             int idToQuery = userLinkedtoLogged.Id;
 
-            var _events = _context.Events.Include(m => m.Status).Include(m=>m.Category).Include(m => m.AppUser).Include(m=>m.City).ToList().OrderBy(m => m.Status.Name).Where(m=>m.AppUserId==idToQuery);
+            var _events = _context.Events.Where(e => e.Done == false)
+                .Include(m => m.Status).Include(m=>m.Category)
+                .Include(m => m.AppUser).Include(m=>m.City).ToList().OrderBy(m => m.Status.Name).Where(m=>m.AppUserId==idToQuery);
             
             return View("Index",_events);
+        }
+
+        public ActionResult Calendar()
+        {
+            return View("Calendar");
+        }
+
+
+        public JsonResult GetEvents()
+        {
+            if (User.IsInRole(RoleName.Professional) || User.IsInRole(RoleName.Admin))
+            {
+                var events = _context.Events.Where(e => e.Done == false)
+                    .Include(m => m.Status).Include(m => m.Category).Include(m => m.AppUser)
+                    .Include(m => m.City).OrderBy(m => m.Category.Name).ToList();
+
+                return new JsonResult { Data = events, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+            }
+            else
+            {
+                var currentLoggedId = User.Identity.GetUserId();
+                var userLinkedtoLogged = _context.AppUsers.SingleOrDefault(m => m.CurrentUserId == currentLoggedId);
+                int idToQuery = userLinkedtoLogged.Id;
+
+
+                var events = _context.Events.Where(e => e.Done == false)
+                    .Include(m => m.Status).Include(m => m.Category)
+                    .Include(m => m.AppUser).Include(m => m.City).ToList().OrderBy(m => m.Status.Name).Where(m => m.AppUserId == idToQuery);
+
+                return new JsonResult { Data = events, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+            }
+            
         }
 
     }

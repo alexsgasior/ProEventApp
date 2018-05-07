@@ -5,13 +5,13 @@ using System.Web;
 
 namespace ProEventApp.Models
 {
-    public class Comment
+    public class EventComment
     {
         public int Id { get; set; }
         public string Content { get; set; }
-        public DateTime DateCreated { get; set; }
-        public string Unique { get; set; }
         public string Who { get; set; }
-
+        public int AppEventId { get; set; }
+        public AppEvent AppEvent { get; set; }
+        public DateTime DateCreated { get; set; }
     }
 }

@@ -28,10 +28,10 @@
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div class="container1">
-    <div>       
+    <div>
         @if (Model.HasPassword)
         {
-            @Html.ActionLink("Change your password", "ChangePassword",null,new {@class="btn btn-primary"})
+            @Html.ActionLink("Change your password", "ChangePassword", null, new { @class = "btn btn-primary" })
         }
         else
         {
@@ -40,19 +40,25 @@
     </div>
     <div>
         <p>
-            @Html.ActionLink(linkText: "List of accepted events", actionName: "ListOfAcceptedEvents", routeValues: null, htmlAttributes: new {@class = "btn btn-primary"})
+            @Html.ActionLink(linkText: "List of accepted events", actionName: "ListOfAcceptedEvents", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
         </p>
     </div>
 
     <div>
         <p>
-            @Html.ActionLink(linkText: "List of invitations", actionName: "ListProInv", routeValues: null, htmlAttributes: new {@class = "btn btn-primary"})
+            @Html.ActionLink(linkText: "List of invitations", actionName: "ListProInv", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
         </p>
     </div>
 
     <div>
         <p>
-            @Html.ActionLink(linkText: "Your Profile", actionName: "ProDetailProfile", routeValues: null, htmlAttributes: new {@class = "btn btn-primary"}, controllerName: "Profiles")
+            @Html.ActionLink(linkText: "Your Profile", actionName: "ProDetailProfile", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" }, controllerName: "Profiles")
+        </p>
+    </div>
+
+    <div>
+        <p>
+            @Html.ActionLink(linkText: "Archive of events", actionName: "EventsArchive", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" }, controllerName: "AppEvents")
         </p>
     </div>
 

@@ -32,5 +32,6 @@ namespace ProEventApp.Models
         public string HouseNumber { get; set; }
         public DateTime Date { get; set; }
         public string Findid { get; set; }
+        public bool Done { get; set; }
     }
 }

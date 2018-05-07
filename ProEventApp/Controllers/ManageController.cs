@@ -507,7 +507,33 @@ namespace ProEventApp.Controllers
             return View("ListOfAcceptedEventsForAppUser", _events);
         }
 
+        // only user can authorize if the work is done
+        // 2==> Inv Accepted
+        [Authorize(Roles = RoleName.AppUser)]
+        public ActionResult DecideIfJobDone(int id)
+        {
+            var invToChangeStatus = _context.EventProfessionals.SingleOrDefault(m => m.Id == id);
 
+            invToChangeStatus.Done = true;
+
+
+            // id of the event form the url
+            var _urlString = Request.UrlReferrer.ToString();
+            var url = new Uri(_urlString);
+            var lastSegment = url.Segments.Last();
+            var _event_id = Convert.ToInt32(lastSegment);
+
+
+            var _event = _context.Events.SingleOrDefault(e => e.Id == _event_id);
+            _event.Done = true;
+
+
+            _context.SaveChanges();
+
+
+
+            return Redirect(Request.UrlReferrer.ToString());
+        }
 
         [Authorize(Roles = RoleName.AppUser)]
         public ActionResult AppUserChangeInvStatusToDecline(int id)

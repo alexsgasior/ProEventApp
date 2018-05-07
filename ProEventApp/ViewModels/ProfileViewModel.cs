@@ -12,5 +12,7 @@ namespace ProEventApp.ViewModels
         public Profile Profile { get; set; }
         public AppUser AppUser { get; set; }
         public IEnumerable<ProfileImage> ProfileImages { get; set; }
+        public IEnumerable<UserProComment> UserProComments { get; set; }
+        public Comment Comment { get; set; }
     }
 }

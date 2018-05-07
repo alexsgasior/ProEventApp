@@ -1,27 +1,20 @@
 ﻿@model IEnumerable<ProEventApp.Models.AppEvent>
 
-
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "EventsArchiveForPro";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 style="text-align: center">Events on FindPro!</h1>
-<br/>
+<h2>Archive of events</h2>
 @if (!Model.Any())
 {
-    <p>You don't have any events yet.</p>
+    <p>You don't have any done events yet.</p>
     <p>
-        @Html.ActionLink("Add new event!", "New", "AppEvents", null, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Go to your dashboard", "Index", "Manage", null, new { @class = "btn btn-primary" })
     </p>
 }
 else
 {
-
-    @*<p>
-        @Html.ActionLink("Add new event!", "New", "AppEvents", null, new { @class = "btn btn-primary" })
-    </p>*@
-
 
     <table class="table table-bordered table-hover table-dark table-striped">
         <thead class="bg-primary">
@@ -42,11 +35,14 @@ else
 
                     <td>@_event.Category.Name</td>
 
-                    <td><a href="@Url.Action("DetailsForPro","AppEvents",new {_event.Id})">Details</a></td>
+                    @*<td>@Html.ActionLink(linkText: "Details", actionName: "Details", controllerName: "AppEvents", routeValues: new { @id = _event.Id })Details</td>*@
+                    <td><a href="@Url.Action("Details","AppEvents",new {_event.Id})">Details</a></td>
 
                 </tr>
             }
         </tbody>
     </table>
 }
+
+
 

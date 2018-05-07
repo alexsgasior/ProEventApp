@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<ProEventApp.Models.AppEvent>
-    
+
 
 @{
     ViewBag.Title = "Index";
@@ -20,38 +20,40 @@ else
     <p>
         @Html.ActionLink("Add new event!", "New", "AppEvents", null, new { @class = "btn btn-primary" })
     </p>
-
+    <p>
+        @Html.ActionLink("View your events on the calendar", "Calendar", "AppEvents", null, new { @class = "btn btn-primary" })
+    </p>
 
     <table class="table table-bordered table-hover table-dark table-striped">
         <thead class="bg-primary">
-        <tr>
-            <th>Category</th>
-            <th>Description</th>
-            <th>Category</th>
-            <th>Add an image</th>
-            <th>Delete</th>
-            <th>Details</th>
-        </tr>
+            <tr>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Add an image</th>
+                <th>Delete</th>
+                <th>Details</th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var _event in Model)
-        {
-            <tr>
-                <td>@Html.ActionLink(_event.Name, "Edit", "AppEvents", new { id = _event.Id }, null)</td>
+            @foreach (var _event in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(_event.Name, "Edit", "AppEvents", new { id = _event.Id }, null)</td>
 
-                <td>@_event.Description</td>
+                    <td>@_event.Description</td>
 
-                <td>@_event.Category.Name</td>
+                    <td>@_event.Category.Name</td>
 
-                <td>@Html.ActionLink("Add image", "AddImg", "AppEvents", new { id = _event.Id }, new { onclick = "return confirm('Are you sure you want to add images to this event?');" })</td>
-                
-                <td>@Html.ActionLink("Delete", "Delete", "AppEvents", new { id = _event.Id }, new { onclick = "return confirm('Are you sure you wish to delete this event?');" })</td>
+                    <td>@Html.ActionLink("Add image", "AddImg", "AppEvents", new { id = _event.Id }, new { onclick = "return confirm('Are you sure you want to add images to this event?');" })</td>
 
-                @*<td>@Html.ActionLink(linkText: "Details", actionName: "Details", controllerName: "AppEvents", routeValues: new { @id = _event.Id })Details</td>*@
-                <td><a href="@Url.Action("Details","AppEvents",new {_event.Id})">Details</a></td>
+                    <td>@Html.ActionLink("Delete", "Delete", "AppEvents", new { id = _event.Id }, new { onclick = "return confirm('Are you sure you wish to delete this event?');" })</td>
 
-            </tr>
-        }
+                    @*<td>@Html.ActionLink(linkText: "Details", actionName: "Details", controllerName: "AppEvents", routeValues: new { @id = _event.Id })Details</td>*@
+                    <td><a href="@Url.Action("Details","AppEvents",new {_event.Id})">Details</a></td>
+
+                </tr>
+            }
         </tbody>
     </table>
 }

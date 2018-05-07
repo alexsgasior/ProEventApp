@@ -13,4 +13,14 @@ namespace ProEventApp.Models
         public const string Admin = "Admin";
 
     }
+
+    public enum ScoringRange
+    {
+        VeryLow =1,
+        Low = 2,
+        Medium = 3, 
+        High = 4 , 
+        VeryHigh =5
+    }
+
 }
