@@ -11,8 +11,6 @@ namespace ProEventApp.Controllers
 {
     public class CitiesController : Controller
     {
-
-
         private ApplicationDbContext _context;
 
         public CitiesController()

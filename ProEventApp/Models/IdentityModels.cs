@@ -27,6 +27,8 @@ namespace ProEventApp.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Advertisement> Advertisements { get; set; }
+        public DbSet<ProAdvertisement> ProAdvertisements { get; set; }
         public DbSet<EventComment> Comments { get; set; }
 
         public DbSet<Comment> UPComments { get; set; }

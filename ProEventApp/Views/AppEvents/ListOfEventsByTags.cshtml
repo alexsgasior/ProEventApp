@@ -1,0 +1,50 @@
+﻿@model IEnumerable<ProEventApp.Models.AppEvent>
+
+
+@{
+    ViewBag.Title = "ListOfEventsByTags";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 style="text-align: center">Events on FindPro!</h1>
+<br />
+@if (!Model.Any())
+{
+    <h1>We don't have any events with the given tags.</h1>
+    
+    <p>
+        @Html.ActionLink(linkText: "Back", actionName: "Index", routeValues: null, htmlAttributes: new {@class = "btn btn-primary"}, controllerName: "AppEvents")
+    </p>
+
+}
+else
+{
+
+    <table class="table table-bordered table-hover table-dark table-striped">
+        <thead class="bg-primary">
+            <tr>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var _event in Model)
+            {
+                <tr>
+                    <td>@_event.Name</td>
+
+                    <td>@_event.Description</td>
+
+                    <td>@_event.Category.Name</td>
+
+                    <td><a href="@Url.Action("DetailsForPro","AppEvents",new {_event.Id})">Details</a></td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+

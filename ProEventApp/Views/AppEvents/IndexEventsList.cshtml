@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProEventApp.Models.AppEvent>
+﻿@model ProEventApp.ViewModels.ProEventsListIndexViewModel
 
 
 @{
@@ -7,10 +7,11 @@
 }
 
 <h1 style="text-align: center">Events on FindPro!</h1>
-<br/>
-@if (!Model.Any())
+<br />
+@if (!Model.AppEvents.Any())
 {
-    <p>You don't have any events yet.</p>
+    <p>We don't have any events yet.</p>
+    <h1>Advertise your services!</h1>
     <p>
         @Html.ActionLink("Add new event!", "New", "AppEvents", null, new { @class = "btn btn-primary" })
     </p>
@@ -19,10 +20,18 @@ else
 {
 
     @*<p>
-        @Html.ActionLink("Add new event!", "New", "AppEvents", null, new { @class = "btn btn-primary" })
-    </p>*@
+            @Html.ActionLink("Add new event!", "New", "AppEvents", null, new { @class = "btn btn-primary" })
+        </p>*@
+    <h2 class="text-muted">Find events by #tags</h2>
 
-
+    using (Html.BeginForm("ListOfEventsByTags", "AppEvents"))
+    {
+        <p>
+            <h3 class="text-muted">Type <strong>#tags</strong>:</h3> <input type="text" name="search_query" />
+            <input type="submit" value="Search" class="btn btn-primary" />
+        </p>
+    }
+    <h2 style="color: red">Events in your category</h2>
     <table class="table table-bordered table-hover table-dark table-striped">
         <thead class="bg-primary">
             <tr>
@@ -33,7 +42,34 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var _event in Model)
+            @foreach (var _event in Model.ProCategoryList)
+            {
+                <tr>
+                    <td>@_event.Name</td>
+
+                    <td>@_event.Description</td>
+
+                    <td>@_event.Category.Name</td>
+
+                    <td><a href="@Url.Action("DetailsForPro","AppEvents",new {_event.Id})">Details</a></td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h2 style="color: red">All events</h2>
+    <table class="table table-bordered table-hover table-dark table-striped">
+        <thead class="bg-primary">
+            <tr>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var _event in Model.AppEvents)
             {
                 <tr>
                     <td>@_event.Name</td>

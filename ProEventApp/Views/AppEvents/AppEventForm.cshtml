@@ -77,7 +77,12 @@
         @Html.LabelFor(m => m.AppEvent.StatusId)
         @Html.DropDownListFor(m => m.AppEvent.StatusId, new SelectList(Model.Statuses, "Id", "Name"), "Select event status", new { @class = "form-control" })
     </div>
-    
+    <div class="form-group">
+        @Html.LabelFor(m => m.AppEvent.Tags,"Tags: ")
+        @Html.TextAreaFor(m => m.AppEvent.Tags, new { @class = "form-control", @rows = "4" })
+        @Html.ValidationMessageFor(m => m.AppEvent.Tags)
+    </div>
+
 
     @Html.HiddenFor(m => m.AppEvent.Id)
     @Html.AntiForgeryToken()

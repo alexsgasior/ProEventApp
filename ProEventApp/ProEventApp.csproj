@@ -197,6 +197,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImagesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ProAdvertisementsController.cs" />
     <Compile Include="Controllers\ProfessionalController.cs" />
     <Compile Include="Controllers\ProfessionsController.cs" />
     <Compile Include="Controllers\ProfilesController.cs" />
@@ -440,9 +441,22 @@
     <Compile Include="Migrations\201804160846222_done_added_to_AppEvent.Designer.cs">
       <DependentUpon>201804160846222_done_added_to_AppEvent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805071047231_ads_added_to_Models.cs" />
+    <Compile Include="Migrations\201805071047231_ads_added_to_Models.Designer.cs">
+      <DependentUpon>201805071047231_ads_added_to_Models.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805080559474_Tags_added_to_appevent.cs" />
+    <Compile Include="Migrations\201805080559474_Tags_added_to_appevent.Designer.cs">
+      <DependentUpon>201805080559474_Tags_added_to_appevent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805080835286_Tags_added_to_appevent1.cs" />
+    <Compile Include="Migrations\201805080835286_Tags_added_to_appevent1.Designer.cs">
+      <DependentUpon>201805080835286_Tags_added_to_appevent1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\Advertisement.cs" />
     <Compile Include="Models\AppUser.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\City.cs" />
@@ -456,6 +470,7 @@
     <Compile Include="Models\InvitationStatus.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\ProAdvertisement.cs" />
     <Compile Include="Models\Profession.cs" />
     <Compile Include="Models\Professional.cs" />
     <Compile Include="Models\Profile.cs" />
@@ -472,6 +487,7 @@
     <Compile Include="ViewModels\AppEventFormViewModel.cs" />
     <Compile Include="ViewModels\EventProfessionalForm.cs" />
     <Compile Include="ViewModels\ListOfProInvsViewModel.cs" />
+    <Compile Include="ViewModels\ProEventsListIndexViewModel.cs" />
     <Compile Include="ViewModels\ProfessionalProfileViewModel.cs" />
     <Compile Include="ViewModels\ProfileViewModel.cs" />
     <Compile Include="ViewModels\UserProfileViewModel.cs" />
@@ -595,11 +611,13 @@
     <Content Include="Views\AppEvents\EventsArchiveForPro.cshtml" />
     <Content Include="Views\AppEvents\DeatilsEventArchiveForPro.cshtml" />
     <Content Include="Views\AppEvents\Calendar.cshtml" />
+    <Content Include="Views\AppEvents\ListOfEventsByTags.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\EventComments\" />
     <Folder Include="Views\EventImages\" />
+    <Folder Include="Views\ProAdvertisements\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -791,6 +809,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804160846222_done_added_to_AppEvent.resx">
       <DependentUpon>201804160846222_done_added_to_AppEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805071047231_ads_added_to_Models.resx">
+      <DependentUpon>201805071047231_ads_added_to_Models.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805080559474_Tags_added_to_appevent.resx">
+      <DependentUpon>201805080559474_Tags_added_to_appevent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805080835286_Tags_added_to_appevent1.resx">
+      <DependentUpon>201805080835286_Tags_added_to_appevent1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

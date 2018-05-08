@@ -33,5 +33,7 @@ namespace ProEventApp.Models
         public DateTime Date { get; set; }
         public string Findid { get; set; }
         public bool Done { get; set; }
+        public string Tags { get; set; }
+
     }
 }

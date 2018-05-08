@@ -184,6 +184,10 @@ namespace ProEventApp.Controllers
                 modelImage.Comment = comment;
                 image1.InputStream.Read(modelImage.Bytes, 0, image1.ContentLength);
             }
+            else
+            {
+                return;
+            }
             _context.Images.Add(modelImage);
             _context.SaveChanges();
 
@@ -262,6 +266,7 @@ namespace ProEventApp.Controllers
             _event.AppUser = appUserToPass;
             _event.AppUserId = appUserToPass.Id;
             
+
             if (_event.Id == 0)
             {
                 _context.Events.Add(_event);
@@ -740,9 +745,27 @@ namespace ProEventApp.Controllers
             var _allEvent = _context.Events.Where(e => e.Done == false)
                 .Include(m => m.Status).Include(m => m.Category).Include(m => m.AppUser)
                 .Include(m => m.City).OrderBy(m => m.Category.Name).ToList();
+
+
+
+            
             if (User.IsInRole(RoleName.Professional))
             {
-                return View("IndexEventsList", _allEvent);
+                var currentLoggedIdPro = User.Identity.GetUserId();
+                var proLinkedtoLogged = _context.Professionals.Include(x=>x.Profession).Include(x=>x.Profession.Category).SingleOrDefault(m => m.CurrentUserId == currentLoggedIdPro);
+                int idToQueryPro = proLinkedtoLogged.Id;
+                string proCat = proLinkedtoLogged.Profession.Category.Name;
+                var _allEventByCategory = _context.Events.Where(e => e.Done == false)
+                    .Include(m => m.Status).Include(m => m.Category).Include(m => m.AppUser)
+                    .Include(m => m.City).Where(m => m.Category.Name == proCat).ToList();
+
+                var viewModel = new ProEventsListIndexViewModel
+                {
+                    AppEvents = _allEvent,
+                    ProCategoryList = _allEventByCategory
+                };
+
+                return View("IndexEventsList", /*_allEvent*/viewModel);
             }
             if (User.IsInRole(RoleName.Admin))
             {
@@ -758,6 +781,26 @@ namespace ProEventApp.Controllers
             
             return View("Index",_events);
         }
+
+
+        public ActionResult ListOfEventsByTags(string search_query)
+        {
+
+            
+
+            var _allEvents = _context.Events.Where(e => e.Done == false)
+            .Include(m => m.Status).Include(m => m.Category).Include(m => m.AppUser)
+            .Include(m => m.City).OrderBy(m => m.Category.Name).Where(x=>x.Tags.Contains(search_query)).ToList();
+
+            
+
+            return View("ListOfEventsByTags", _allEvents);
+        }
+
+
+
+
+
 
         public ActionResult Calendar()
         {
