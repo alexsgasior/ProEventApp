@@ -453,6 +453,10 @@
     <Compile Include="Migrations\201805080835286_Tags_added_to_appevent1.Designer.cs">
       <DependentUpon>201805080835286_Tags_added_to_appevent1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805080937518_advertisement_findingId_added.cs" />
+    <Compile Include="Migrations\201805080937518_advertisement_findingId_added.Designer.cs">
+      <DependentUpon>201805080937518_advertisement_findingId_added.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -612,12 +616,13 @@
     <Content Include="Views\AppEvents\DeatilsEventArchiveForPro.cshtml" />
     <Content Include="Views\AppEvents\Calendar.cshtml" />
     <Content Include="Views\AppEvents\ListOfEventsByTags.cshtml" />
+    <Content Include="Views\ProAdvertisements\AdvertisementForm.cshtml" />
+    <Content Include="Views\ProAdvertisements\IndexPro.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\EventComments\" />
     <Folder Include="Views\EventImages\" />
-    <Folder Include="Views\ProAdvertisements\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -818,6 +823,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805080835286_Tags_added_to_appevent1.resx">
       <DependentUpon>201805080835286_Tags_added_to_appevent1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805080937518_advertisement_findingId_added.resx">
+      <DependentUpon>201805080937518_advertisement_findingId_added.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
