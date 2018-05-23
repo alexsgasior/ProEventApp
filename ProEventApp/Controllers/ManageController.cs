@@ -56,6 +56,7 @@ namespace ProEventApp.Controllers
         }
 
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleName.AppUser)]
         public ActionResult SaveProfileToUser(UserProfileViewModel _userProfile)
         {
             var currentId = User.Identity.GetUserId();
@@ -109,7 +110,49 @@ namespace ProEventApp.Controllers
             
             return RedirectToAction("Index", "Manage");
         }
+        //public ActionResult NewAdmin()
+        //{
+        //    var appuser = _context.AppUsers.ToList();
+        //    //var viewModel = new ProfessionFormViewModel
+        //    //{
+        //    //    Categories = categories
+        //    //};
 
+
+        //    return View("AdminForm");
+        //}
+        //public async Task<ActionResult> AddUserToAdminRole(AppUser _appUser)
+        //{
+        //    var currentId = User.Identity.GetUserId();
+        //    _appUser.CurrentUserId = currentId;
+
+        //    var userTeraz = _context.Users.FirstOrDefault(m => m.Id == currentId);
+
+        //    _appUser.Email = userTeraz.Email;
+        //    _appUser.ProfileId = 1; // tworzy wiazanie do profilu "domyslnego"!! 
+
+
+        //    if (_appUser.Id == 0)
+        //    {
+        //        _context.AppUsers.Add(_appUser);
+        //    }
+
+        //    _context.SaveChanges();
+
+
+
+        //    var appUserToLink = _context.AppUsers.FirstOrDefault(m => m.CurrentUserId == currentId);
+        //    int appUserToLinkId = appUserToLink.Id;
+        //    userTeraz.AppUserId = appUserToLinkId;
+
+        //    _context.SaveChanges();
+        //    //var roleStore = new RoleStore<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new ApplicationDbContext());
+        //    //var roleManager = new RoleManager<IdentityRole>(roleStore);
+        //    //await roleManager.CreateAsync(new IdentityRole(RoleName.Admin));
+        //    //UserManager.AddToRole(userTeraz.Id, RoleName.Admin);
+
+        //    return RedirectToAction("Index", "Manage");
+        //}
         public ActionResult NewAppUser()
         {
             var appuser = _context.AppUsers.ToList();

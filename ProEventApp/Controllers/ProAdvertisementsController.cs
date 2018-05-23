@@ -30,7 +30,7 @@ namespace ProEventApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles =RoleName.Professional)]
-        public ActionResult Save(ProAdvertisement ad)  // dodaj TEN SAM obiekt do tabelki asocjacyjnej i bedzie git :D
+        public ActionResult Save(ProAdvertisement ad)  
         {
             Guid guid = Guid.NewGuid();
             string strGuid = guid.ToString();
@@ -72,40 +72,46 @@ namespace ProEventApp.Controllers
             return RedirectToAction("Index", "ProAdvertisements");
         }
 
-        [Authorize(Roles = RoleName.Admin+" "+RoleName.Professional)]
+        [Authorize(Roles = RoleName.Professional+","+RoleName.Admin)]
         public ActionResult Delete(int id)
         {
-            if (User.IsInRole(RoleName.Professional))
+            if (User.IsInRole(RoleName.Professional) || User.IsInRole(RoleName.Admin))
             {
-                var currentLoggedIdPro = User.Identity.GetUserId();
-                var proLinkedtoLogged = _context.Professionals.Include(x => x.Profession).Include(x => x.Profession.Category).SingleOrDefault(m => m.CurrentUserId == currentLoggedIdPro);
-                int idToQueryPro = proLinkedtoLogged.Id;
+                var padd = _context.ProAdvertisements.SingleOrDefault(p => p.Id == id);
 
-                var padd = _context.ProAdvertisements.Where(p => p.Id == id).Where(x=>x.ProfessionalId == idToQueryPro);
-                if (padd == null)
+                if (User.IsInRole(RoleName.Professional))
                 {
-                    return HttpNotFound();
+                    var currentLoggedIdPro = User.Identity.GetUserId();
+                    var proLinkedtoLogged = _context.Professionals.Include(x => x.Profession).Include(x => x.Profession.Category).SingleOrDefault(m => m.CurrentUserId == currentLoggedIdPro);
+                    int idToQueryPro = proLinkedtoLogged.Id;
+
+
+                    if (padd.ProfessionalId != idToQueryPro)
+                    {
+                        return HttpNotFound();
+                    }
+                    _context.ProAdvertisements.Remove(padd);
+                    _context.SaveChanges();
+
                 }
-                var addToDelete = padd.SingleOrDefault(x => x.AdvertisementId == id);
-                _context.ProAdvertisements.Remove(addToDelete);
-                _context.SaveChanges();
-            }
-            else
-            {
-                var add = _context.ProAdvertisements.SingleOrDefault(p => p.Id == id);
-                if (add == null)
+                
+
+                
+                if (User.IsInRole(RoleName.Admin))
                 {
-                    return HttpNotFound();
+                    _context.ProAdvertisements.Remove(padd);
+                    _context.SaveChanges();
+                    return RedirectToAction("Index", "ProAdvertisements");
                 }
-                _context.ProAdvertisements.Remove(add);
-                _context.SaveChanges();
                 
             }
+            
             return RedirectToAction("Index", "ProAdvertisements");
         }
 
 
         // GET: ProAdvertisements
+        [AllowAnonymous]
         public ActionResult Index()
         {
 
@@ -121,16 +127,20 @@ namespace ProEventApp.Controllers
                 
 
 
+                //return View("IndexPro", allAds);
                 return View("IndexPro", allAds);
             }
-            else if (User.IsInRole(RoleName.Admin))
+            if (User.IsInRole(RoleName.Admin))
             {
                 return View("IndexAdmin", allAds);
             }
-            else
-            {
-                return View("IndexPublic", allAds);
-            }
+
+            
+            return View("IndexUserAdds", allAds);
+            
+
+            
+            
         }
 
 

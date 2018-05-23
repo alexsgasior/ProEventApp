@@ -79,8 +79,8 @@
         </thead>
         <tbody>
             @foreach (var _event in Model.AppEvents)
-        {
-            <tr>
+             {
+             <tr>
                 <td>@Html.ActionLink(_event.Name, "Edit", "AppEvents", new { id = _event.Id }, null)</td>
 
                 <td>@_event.Description</td>
@@ -92,8 +92,8 @@
 
                 <td>@Html.ActionLink("Send your offer", "NewInvToEventFromPro", "AppEvents", new { id = _event.Id }, new { onclick = "return confirm('Are you sure you want to send offer to this event?');" })</td>
 
-            </tr>
-    }
+             </tr>
+             }
         </tbody>
     </table>
     

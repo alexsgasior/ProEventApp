@@ -1,20 +1,15 @@
-﻿@model ProEventApp.Models.ProAdvertisement
-
-
-@using WebGrease.Css.Extensions
-
+﻿@model IEnumerable<ProEventApp.Models.ProAdvertisement>
+    
 
 <head>
     @{
-        ViewBag.Title = "AdvertisementForm";
+        ViewBag.Title = "IndexProModaljs";
         Layout = "~/Views/Shared/_Layout.cshtml";
     }
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-        }
+        body {font-family: Arial, Helvetica, sans-serif;}
 
         /* The Modal (background) */
         .modal {
@@ -48,26 +43,32 @@
             font-weight: bold;
         }
 
-            .close:hover,
-            .close:focus {
-                color: #000;
-                text-decoration: none;
-                cursor: pointer;
-            }
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 
 </head>
 
 <body>
 
-    <h1 style="text-align: center">Advertisements</h1>
+<h2>Advertisements</h2>
 
-    <br /><br /><br /><br />
+<p>
+    @Html.ActionLink("New advertisement", "New", "ProAdvertisements", null, new { @class = "btn btn-primary" })
+</p>
+    
 
-    <div style="text-align: center">
-        <h2>Add new advertisement</h2>
+@foreach (var item in @Model)
+{
+    <div style="border: 1px solid red; text-align: center;">
+        <h2>@item.Advertisement.Title</h2>
+
         <!-- Trigger/Open The Modal -->
-        <button class="btn btn-primary" id="myBtn">New advertisement</button>
+        <button id="myBtn">@item.Advertisement.AdText</button>
 
         <!-- The Modal -->
         <div id="myModal" class="modal">
@@ -75,35 +76,16 @@
             <!-- Modal content -->
             <div class="modal-content">
                 <span class="close">&times;</span>
-
-                @using (Html.BeginForm("Save", "ProAdvertisements", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Advertisement.Title, "Title of the advertisement")
-                    @Html.TextBoxFor(m => m.Advertisement.Title, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Advertisement.Title)
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Advertisement.AdText, "Text")
-                    @Html.TextBoxFor(m => m.Advertisement.AdText, new { @class = "form-control", @id = "middle" })
-                    @Html.ValidationMessageFor(m => m.Advertisement.AdText)
-                </div>
-
-
-                @Html.AntiForgeryToken()
-                <button type="submit" class="btn btn-primary">Add</button>
-        }
-
-
-
-
+                <p>@item.Professional.Name @item.Professional.Surname</p>
+                <p>@item.Advertisement.Title</p>
+                <p>@item.Advertisement.AdText</p>
             </div>
 
         </div>
     </div>
+}
 
 
-    
 
 
 </body>
@@ -120,7 +102,7 @@
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
 
-        // When the user clicks the button, open the modal
+        // When the user clicks the button, open the modal 
         btn.onclick = function() {
             modal.style.display = "block";
         }

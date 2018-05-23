@@ -64,15 +64,17 @@ namespace ProEventApp.Controllers
             var appEventId = Convert.ToInt32(TempData["idOfEventPassToInvPro"]); // IdOfCurrentEvent
             id = Convert.ToInt32(TempData["professionalToInvPro"]);
 
-            var userIdToPass = User.Identity.GetUserId();
-            //var user = _context.Users.FirstOrDefault(u => u.Id == userIdToPass);
-            //var appUserToPass = _context.AppUsers.SingleOrDefault(c => c.Id == user.AppUserId);
-
+            var userIdToPass = User.Identity.GetUserId();            
             var professionalToInv = _context.Professionals.SingleOrDefault(m => m.CurrentUserId == userIdToPass);
-            var eventToInv = _context.Events.SingleOrDefault(m => m.Id == appEventId);
-            var invStatus =
-                _context.InvitationStatuses.SingleOrDefault(m => m.Id == _eventProfessional.EventProfessional.InvitationStatusId);
 
+            var eventToInv = _context.Events.SingleOrDefault(m => m.Id == appEventId);
+
+            if (_eventProfessional.EventProfessional.DateOfJob < new DateTime(1999,1,1))
+            {
+                _eventProfessional.EventProfessional.DateOfJob = eventToInv.Date;
+            }
+            //.EventProfessional.DateOfJob = eventToInv.Date;
+            
             var invStatus_Pending = _context.InvitationStatuses.SingleOrDefault(m => m.Name == "Pending");
 
             var inv = new EventProfessional()
@@ -82,7 +84,7 @@ namespace ProEventApp.Controllers
                 Price = _eventProfessional.EventProfessional.Price,
                 ProfessionalId = professionalToInv.Id,
                 Professional = professionalToInv,
-                InvitationStatusId = /*_eventProfessional.EventProfessional.InvitationStatusId*/invStatus_Pending.Id,
+                InvitationStatusId = invStatus_Pending.Id,
                 InvitationStatus = invStatus_Pending,
                 AppEvent = eventToInv,
                 AppEventId = appEventId,
@@ -90,7 +92,7 @@ namespace ProEventApp.Controllers
             };
             _context.EventProfessionals.Add(inv);
             _context.SaveChanges();
-            //return View();
+
             return RedirectToAction("Index", "AppEvents");
         }
 

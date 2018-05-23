@@ -11,7 +11,7 @@
 
         @foreach (var img in Model.EventImages)
         {
-            <img src="data:image;base64,@System.Convert.ToBase64String(img.Image.Bytes)" width="250" height="250"/>
+            <img src="data:image;base64,@System.Convert.ToBase64String(img.Image.Bytes)" width="250" height="250" />
             <p>@img.Image.Comment</p>
         }
         <h2>
@@ -37,21 +37,21 @@
     </div>
     <table class="table table-bordered table-hover table-dark table-striped">
         <thead class="bg-primary">
-        <tr>
-            <th>Comment</th>
-            <th>Who</th>
-            <th>Added</th>
-        </tr>
+            <tr>
+                <th>Comment</th>
+                <th>Who</th>
+                <th>Added</th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var comment in Model.Comments)
-        {
-            <tr>
-                <td>@comment.Content</td>
-                <td>@comment.Who</td>
-                <td>@comment.DateCreated</td>
-            </tr>
-        }
+            @foreach (var comment in Model.Comments)
+            {
+                <tr>
+                    <td>@comment.Content</td>
+                    <td>@comment.Who</td>
+                    <td>@comment.DateCreated</td>
+                </tr>
+            }
         </tbody>
     </table>
 
@@ -60,20 +60,25 @@
     {
         <div class="form-group">
             @Html.LabelFor(m => m.EventComment.Content)
-            @Html.TextBoxFor(m => m.EventComment.Content, new {@class = "form-control"})
+            @Html.TextBoxFor(m => m.EventComment.Content, new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.EventComment.Content)
         </div>
 
         @Html.HiddenFor(m => m.EventComment.Id)
         <button type="submit" class="btn btn-primary">Comment</button>
     }
+    <br />
+    <p>
+        @Html.ActionLink(linkText: "Send your offer", actionName: "NewInvToEventFromPro", routeValues: new { id = @Model.Event.Id }, htmlAttributes: new { @class = "btn btn-primary" }, controllerName: "AppEvents")
+    </p>
 
-    <br/>
-    <div>
-        <p>
-            @Html.ActionLink(linkText: "Back", actionName: "ListProInv", routeValues: null, htmlAttributes: new {@class = "btn btn-primary"}, controllerName: "Manage")
-        </p>
-    </div>
+    <br />
+    @*<div>
+            <p>
+                @Html.ActionLink(linkText: "Back", actionName: "ListProInv", routeValues: null, htmlAttributes: new {@class = "btn btn-primary"}, controllerName: "Manage")
+            </p>
+        </div>*@
+    <button type="submit" class="btn btn-primary" style="width: 25%"><a href='javascript:history.go(-1)'>back</a>Back</button>
 
 </div>
 

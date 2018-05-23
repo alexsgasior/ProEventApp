@@ -1,7 +1,9 @@
 ﻿@model ProEventApp.ViewModels.EventProfessionalForm
 @{
-    ViewBag.Title = "New";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+                /**/
+
+                ViewBag.Title = "New";
+                Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>New Event</h2>
@@ -16,7 +18,12 @@
         @Html.LabelFor(m => m.EventProfessional.Price)
         @Html.TextBoxFor(m => m.EventProfessional.Price, new { @class = "form-control" })
     </div>
-    <br/>
+    <div class="form-group">
+        @Html.LabelFor(m => m.EventProfessional.DateOfJob,"Propose your date")
+        @Html.TextBoxFor(m => m.EventProfessional.DateOfJob, new { type = "datetime-local" })
+        @Html.ValidationMessageFor(m => m.EventProfessional.DateOfJob)
+    </div>
+    <br />
     @Html.HiddenFor(m => m.EventProfessional.Id)
     @Html.AntiForgeryToken()
     <button type="submit" class="btn btn-primary">Save</button>

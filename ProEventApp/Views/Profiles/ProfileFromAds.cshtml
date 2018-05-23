@@ -4,7 +4,7 @@
         ViewBag.Title = "ProfileFromAds";
         Layout = "~/Views/Shared/_Layout.cshtml";
     }
-
+    
     <style>
         body .card {
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -33,9 +33,9 @@
         }
 
 
-        button:hover, a:hover {
-            opacity: 0.7;
-        }
+            button:hover, a:hover {
+                opacity: 0.7;
+            }
     </style>
 </head>
 <body>
@@ -44,23 +44,23 @@
 
     <div class="card">
         @if (Model.ProfileImages.Any())
+    {
+        foreach (var img in Model.ProfileImages)
         {
-            foreach (var img in Model.ProfileImages)
-            {
-                <img src="data:image;base64,@System.Convert.ToBase64String(img.Image.Bytes)" width="100%" alt="@Model.Professional.Surname image" />
-            }
-        }
-        else
-        {
-            <img src="https://images.pexels.com/photos/9260/nature-animals-green-game.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Deer" style="width: 100%">
+            <img src="data:image;base64,@System.Convert.ToBase64String(img.Image.Bytes)" width="100%" alt="@Model.Professional.Surname image" />
+    }
+}
+else
+{
+    <img src="https://images.pexels.com/photos/9260/nature-animals-green-game.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Deer" style="width: 100%">
 
-        }
+}
 
 
 
-        <h1>@Model.AppUser.Name @Model.AppUser.Surname</h1>
-        <p class="title"><span style="font-weight: bold; color: black;">Prefered name: </span>@Model.Profile.PreferedName</p>
-        <p class="title">@Model.Profile.About</p>
+        <h1>John Doe</h1>
+        <p class="title"><span style="font-weight: bold; color: black;">Company: </span>@Model.Professional.CompanyName</p>
+        <p class="title">@Model.Professional.CompanyWWW</p>        
         <p style="font-style: italic">Motto: @Model.Profile.Motto</p>
         <div style="margin: 24px 0;">
         </div>
@@ -68,12 +68,12 @@
             <button>Phone: @Model.Professional.Phone</button>
         </p>
     </div>
-
-
-    <div>
-        <p>
-            @Html.ActionLink(linkText: "Back to dashboard", actionName: "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" }, controllerName: "Manage")
-        </p>
-    </div>
+    
+    
+<div>
+    <p>
+        @Html.ActionLink(linkText: "Back", actionName: "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" }, controllerName: "ProAdvertisements")
+    </p>
+</div>
 
 </body>

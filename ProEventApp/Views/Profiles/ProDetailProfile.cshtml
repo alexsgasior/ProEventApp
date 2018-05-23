@@ -1,51 +1,100 @@
 ﻿@model ProEventApp.ViewModels.ProfileViewModel
+<head>
+    @{
+        ViewBag.Title = "ProfileFromAds";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
 
+    <style>
+        body .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            margin: auto;
+            text-align: center;
+            font-family: arial;
+        }
 
+        body .title {
+            color: grey;
+            font-size: 18px;
+        }
 
-<div class="card mb-3">
-    <h2 class="card-header">
-        @Model.Professional.Name @Model.Professional.Surname
-        <h4>Prefered name: @Model.Profile.PreferedName</h4>
-    </h2>
-    <div class="card-body">
-
-        @foreach (var img in Model.ProfileImages)
-        {
-            <img src="data:image;base64,@System.Convert.ToBase64String(img.Image.Bytes)" width="250" height="250" />
+        body button {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 8px;
+            color: white;
+            background-color: #000;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
         }
 
 
-        <div class="card-body">
-            <p class="card-text">About: @Model.Profile.About</p>
+        button:hover, a:hover {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+    <h2 style="text-align:center">@Model.Professional.Profession.Name's Profile</h2>
+
+    <div class="card">
+        @if (Model.ProfileImages.Any())
+        {
+            foreach (var img in Model.ProfileImages)
+            {
+                <img src="data:image;base64,@System.Convert.ToBase64String(img.Image.Bytes)" width="100%" alt="@Model.Professional.Surname image" />
+            }
+        }
+        else
+        {
+            <img src="https://images.pexels.com/photos/9260/nature-animals-green-game.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Deer" style="width: 100%">
+
+        }
+
+
+
+        <h1>@Model.Professional.Name @Model.Professional.Surname</h1>
+        <p class="title"><span style="font-weight: bold; color: black;">Company: </span>@Model.Professional.CompanyName</p>
+        <p class="title">@Model.Professional.CompanyWWW</p>
+        <p style="font-style: italic">Motto: @Model.Profile.Motto</p>
+        <div style="margin: 24px 0;">
         </div>
-
-        <h5 class="card-title">Phone: @Model.Professional.Phone <br /> e-mail: @Model.Professional.Email </h5>
-        <h5 class="card-title">Company: @Model.Professional.CompanyName <br /> website: @Model.Professional.CompanyWWW <br /> NIP: @Model.Professional.NIP </h5>
+        <p>
+            <button>Phone: @Model.Professional.Phone</button>
+        </p>
+        <p>
+            <button>Mail: @Model.Professional.Email</button>
+        </p>
     </div>
-
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">Motto: @Model.Profile.Motto</li>>
-    </ul>
 
     @if (Model.UserProComments.Any())
     {
         <table class="table table-bordered table-hover table-dark table-striped">
             <thead class="bg-primary">
-            <tr>
-                <th>Comment</th>
-                <th>Who</th>
-                <th>Added</th>
-            </tr>
+                <tr>
+                    <th>Comment</th>
+                    <th>Added</th>
+                    <th>Who</th>
+                </tr>
             </thead>
             <tbody>
-            @foreach (var comment in Model.UserProComments)
-            {
-            <tr>
-                <td>@comment.Comment.Content</td>
-                <td>@comment.Comment.DateCreated</td>
-                <td>@comment.Comment.Who</td>
-            </tr>
-            }
+                @if (Model.UserProComments != null)
+                {
+                    foreach (var comment in Model.UserProComments)
+                    {
+                        <tr>
+                            <td>@comment.Comment.Content</td>
+                            <td>@comment.Comment.DateCreated</td>
+                            <td>@comment.Comment.Who</td>
+                        </tr>
+                    }
+                }
+
             </tbody>
         </table>
     }
@@ -53,27 +102,25 @@
         @using (Html.BeginForm("AddCommentToUser", "Profiles"))
         {
             <div class="form-group">
-                @Html.LabelFor(m => m.Comment.Content)
+                @Html.LabelFor(m => m.Comment.Content, "Comment")
                 @Html.TextBoxFor(m => m.Comment.Content, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.Comment.Content)
             </div>
 
             @Html.HiddenFor(m => m.Comment.Id)
-            <button type="submit" class="btn btn-primary">Comment</button>
+            <button type="submit" class="btn btn-primary" style="width: 25%">Comment</button>
         }
     </div>
+    <br />
+
+    @*<div>
+            <p>
+                @Html.ActionLink(linkText: "Back", actionName: "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" }, controllerName: "ProAdvertisements")
+                <button class="btn btn-primary" style=""><a href='javascript:history.go(-1)'>Go Back to Previous Page</a></button>
+            </p>
+        </div>*@
+@*<button class="btn btn-primary" style="width: 25%; color: white;"><a href='javascript:history.go(-1)'>Back</a></button>*@
+    <button type="submit" class="btn btn-primary" style="width: 25%"><a href='javascript:history.go(-1)'>back</a>Back</button>
 
 
-    @*<div class="card-body">
-        @Html.ActionLink("Change profile's photo", "AddImg", "Profiles", new { id = @Model.Profile.Id }, new { onclick = "return confirm('Are you sure you want to change your profile photo?');" })
-    </div>*@
-
-</div>
-
-<div>
-    @Html.ActionLink(linkText: "Back", actionName: "ListInvFromProToEvent", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" }, controllerName: "Manage")
-</div>
-
-<div>
-    @Html.ActionLink(linkText: "Back to dashboard", actionName: "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" },controllerName:"Manage")
-</div>
+</body>

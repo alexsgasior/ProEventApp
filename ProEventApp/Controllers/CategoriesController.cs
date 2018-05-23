@@ -108,6 +108,7 @@ namespace ProEventApp.Controllers
         [Authorize(Roles = RoleName.Admin + "," + RoleName.Professional+","+RoleName.AppUser)]
         public ActionResult Index()
         {
+            var str = User.IsInRole(RoleName.Admin);
             var categories = _context.Categories.ToList();
             if (User.IsInRole(RoleName.AppUser))
             {

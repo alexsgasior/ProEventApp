@@ -58,7 +58,29 @@ namespace ProEventApp.Controllers
             return RedirectToAction("Index","Profiles");
         }
 
+        [Authorize(Roles = RoleName.AppUser)]
+        public ActionResult UserProfile()
+        {
+            var userId = User.Identity.GetUserId();
+            var _appUser = _context.AppUsers.SingleOrDefault(m => m.CurrentUserId == userId);
+            var _appUserId = _appUser.Id;
+            var profileId = _context.AppUsers.SingleOrDefault(m => m.Id == _appUserId).ProfileId;
+            var profile = _context.Profiles.SingleOrDefault(m => m.Id == profileId);
+            var _profileImages = _context.ProfileImages.Include(m => m.Image).Where(m => m.ProfileId == profileId)
+                .ToList();
+            var _UPComments = _context.UserProComments.Where(c => c.AppUserId == _appUserId).ToList();
 
+
+            var viewModel = new ProfileViewModel()
+            {
+                AppUser = _appUser,
+                Profile = profile,
+                ProfileImages = _profileImages,
+                UserProComments = _UPComments
+            };
+
+            return View("UserDetailProfile", viewModel);
+        }
 
         [Authorize(Roles = RoleName.Professional)]
         public ActionResult ProDetailProfile()
@@ -71,7 +93,7 @@ namespace ProEventApp.Controllers
             var profile = _context.Profiles.SingleOrDefault(m => m.Id == profileId);
             var _profileImages = _context.ProfileImages.Include(m => m.Image).Where(m => m.ProfileId == profileId)
                 .ToList();
-            var _UPComments = _context.UserProComments.Where(c => c.ProfessionalId == proId).ToList();
+            var _UPComments = _context.UserProComments.Where(c => c.ProfessionalId == proId).Include(c=>c.Comment).ToList();
 
 
             var viewModel = new ProfileViewModel()
@@ -107,6 +129,28 @@ namespace ProEventApp.Controllers
             return View("ProDetailProfile", viewModel);
         }
 
+        [Authorize(Roles = RoleName.Admin + "," + RoleName.AppUser + "," + RoleName.Professional)]
+        public ActionResult ProfileFromAds(int id)
+        {
+            var pro = _context.Professionals.SingleOrDefault(m => m.Id == id);
+            var proId = pro.Id;
+            var professional = _context.Professionals.Include(m => m.Profession).SingleOrDefault(m => m.Id == proId);
+            var profileId = _context.Professionals.SingleOrDefault(m => m.Id == proId).ProfileId;
+            var profile = _context.Profiles.SingleOrDefault(m => m.Id == profileId);
+            var _profileImages = _context.ProfileImages.Include(m => m.Image).Where(m => m.ProfileId == profileId)
+                .ToList();
+            var _UPComments = _context.UserProComments.Where(c => c.ProfessionalId == proId).Include(c => c.Comment).ToList();
+
+            var viewModel = new ProfileViewModel()
+            {
+                Professional = professional,
+                Profile = profile,
+                ProfileImages = _profileImages,
+                UserProComments = _UPComments
+            };
+
+            return View("ProfileFromAds", viewModel);
+        }
 
 
         [Authorize(Roles = RoleName.AppUser)]
@@ -201,7 +245,16 @@ namespace ProEventApp.Controllers
             
             _context.SaveChanges();
 
-            return RedirectToAction("ProDetailProfile", "Profiles");
+
+
+
+            if (User.IsInRole(RoleName.Professional))
+            {
+                return RedirectToAction("ProDetailProfile", "Profiles");
+            }
+            
+             return RedirectToAction("UserProfile", "Profiles");
+            
         }
         /// <summary>
         /// user or pro can only add comment to contrahent's profile after 

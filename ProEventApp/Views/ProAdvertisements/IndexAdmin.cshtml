@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@using System.Security.Cryptography
+@using Microsoft.AspNet.Identity
 @using ProEventApp.Models
 @using WebGrease.Css.Ast.MediaQuery
 @model IEnumerable<ProEventApp.Models.ProAdvertisement>
@@ -6,7 +7,7 @@
 
 <head>
     @{
-        ViewBag.Title = "IndexPro";
+        ViewBag.Title = "IndexAdmin";
         Layout = "~/Views/Shared/_Layout.cshtml";
     }
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -105,69 +106,70 @@
                 background-color: #00A5D2;
                 color: white;
             }
-            section {
-                display: flex;
-                flex-wrap: wrap;
-            }
 
-            
-            @@media screen and (max-width: 850px) {
-                .card {
-                    width: 100%;
-                    background-size: 100% 100%;
-                    max-width: 400px;
-                }
+        section {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+
+        @@media screen and (max-width: 850px) {
+            .card {
+                width: 100%;
+                background-size: 100% 100%;
+                max-width: 400px;
             }
+        }
     </style>
 </head>
-@if(Model.Any())
+@if (Model.Any())
 {
     <body>
     <h2>Advertisements</h2>
 
-    <p>
-        @Html.ActionLink("New advertisement", "New", "ProAdvertisements", null, new { @class = "btn btn-primary" })
-    </p>
     <section id="flexwrappingSection">
-    @foreach (var item in Model)
-    {
-        ApplicationDbContext _context = new ApplicationDbContext();
-        var userId = User.Identity.GetUserId();
-        var pro = _context.Professionals.SingleOrDefault(m => m.CurrentUserId == userId);
-        var proId = pro.Id;
+        @foreach (var item in Model)
+        {
+            if (User.IsInRole(RoleName.Professional))
+            {
+                ApplicationDbContext _context = new ApplicationDbContext();
+                var userId = User.Identity.GetUserId();
+                var pro = _context.Professionals.SingleOrDefault(m => m.CurrentUserId == userId);
+                var proId = pro.Id;
+            }
+            
             <div class="card">
                 <div class="top">
-                    <h3 class="name">@item.Professional.Name @item.Professional.Surname<span class=""></span></h3>
+                    <h3 class="name">@item.Professional.Name @item.Professional.Surname<span class=""></span>
+                    </h3>
                     <p class="title">@item.Advertisement.Title</p>
                 </div>
                 <div class="bottom">
-                    <h4  style="border: 2px solid #444444; height: 50%; overflow: scroll">@item.Advertisement.AdText</h4>
+                    <h4 style="border: 2px solid #444444; height: 50%; overflow: scroll">@item.Advertisement.AdText</h4>
                     <button class="profile-action">
-                        @Html.ActionLink(linkText: "Profile", actionName: "ProfileFromAds", routeValues: new { id = @item.ProfessionalId }, htmlAttributes: null, controllerName: "Profiles")
+                        @Html.ActionLink(linkText: "Profile", actionName: "ProfileFromAds", routeValues: new {id = @item.ProfessionalId}, htmlAttributes: null, controllerName: "Profiles")
                     </button>
 
                     @*<p class="profile-action">
-                        @Html.ActionLink(linkText: "Profile", actionName: "ProDetailProfileSpecific", routeValues: new { id = @item.ProfessionalId }, htmlAttributes: new { @class = "btn btn-primary" }, controllerName: "Profiles")
-                    </p>*@
-                    @if (item.ProfessionalId == proId)
-                    {
-                        <button class="profile-action">
-                            @Html.ActionLink(linkText: "Delete the add", actionName: "Delete", routeValues: new { id = item.Id }, htmlAttributes: null, controllerName: "ProAdvertisements")
-                        </button>
-                    }
-                    
+                                @Html.ActionLink(linkText: "Profile", actionName: "ProDetailProfileSpecific", routeValues: new { id = @item.ProfessionalId }, htmlAttributes: new { @class = "btn btn-primary" }, controllerName: "Profiles")
+                            </p>*@
+
+                    <button class="profile-action">
+                        @Html.ActionLink(linkText: "Delete the add", actionName: "Delete", routeValues: new {id = item.Id}, htmlAttributes: null, controllerName: "ProAdvertisements")
+                    </button>
+
+
                 </div>
             </div>
-        
-    }   
+
+        }
     </section>
     </body>
 }
 else
 {
-    <p>
-        @Html.ActionLink("New advertisement", "New", "ProAdvertisements", null, new { @class = "btn btn-primary" })
-    </p>
+    <h1>No ads added.</h1>
+
 }
 
 

@@ -618,6 +618,11 @@
     <Content Include="Views\AppEvents\ListOfEventsByTags.cshtml" />
     <Content Include="Views\ProAdvertisements\AdvertisementForm.cshtml" />
     <Content Include="Views\ProAdvertisements\IndexPro.cshtml" />
+    <Content Include="Views\ProAdvertisements\IndexProModaljs.cshtml" />
+    <Content Include="Views\Profiles\ProfileFromAds.cshtml" />
+    <Content Include="Views\ProAdvertisements\IndexUserAdds.cshtml" />
+    <Content Include="Views\Manage\AdminForm.cshtml" />
+    <Content Include="Views\ProAdvertisements\IndexAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
