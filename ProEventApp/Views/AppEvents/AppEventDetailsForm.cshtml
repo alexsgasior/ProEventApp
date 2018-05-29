@@ -3,7 +3,7 @@
     ViewBag.Title = "AppEventDetailsForm";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div style="background: rgba(255, 0, 0, 0.2);">
+<div style="background: rgba(255, 0, 0, 0.2); width: 80%;">
     <div id="myMainContainer">
         <h1>
             @Model.Event.Name
@@ -11,7 +11,7 @@
 
         @foreach (var img in Model.EventImages)
         {
-            <img src="data:image;base64,@System.Convert.ToBase64String(img.Image.Bytes)" width="250" height="250" />
+            <img src="data:image;base64,@System.Convert.ToBase64String(img.Image.Bytes)" width="250" height="250"/>
             <p>@img.Image.Comment</p>
         }
         <h2>
@@ -39,21 +39,21 @@
 
     <table class="table table-bordered table-hover table-dark table-striped">
         <thead class="bg-primary">
-            <tr>
-                <th>Comment</th>
-                <th>Who</th>
-                <th>Added</th>
-            </tr>
+        <tr>
+            <th>Comment</th>
+            <th>Who</th>
+            <th>Added</th>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var comment in Model.Comments)
-            {
-                <tr>
-                    <td>@comment.Content</td>
-                    <td>@comment.Who</td>
-                    <td>@comment.DateCreated</td>
-                </tr>
-            }
+        @foreach (var comment in Model.Comments)
+        {
+            <tr>
+                <td>@comment.Content</td>
+                <td>@comment.Who</td>
+                <td>@comment.DateCreated</td>
+            </tr>
+        }
         </tbody>
     </table>
 
@@ -61,8 +61,8 @@
     @using (Html.BeginForm("SaveCommentToEvent", "AppEvents"))
     {
         <div class="form-group">
-            @Html.LabelFor(m => m.EventComment.Content)
-            @Html.TextBoxFor(m => m.EventComment.Content, new { @class = "form-control" })
+            @Html.LabelFor(m => m.EventComment.Content,"Comment")
+            @Html.TextBoxFor(m => m.EventComment.Content, new {@class = "form-control"})
             @Html.ValidationMessageFor(m => m.EventComment.Content)
         </div>
 
@@ -70,22 +70,25 @@
         <button type="submit" class="btn btn-primary">Comment</button>
     }
 
-    <hr />
+    <hr/>
 
     <p id="myMainContainer">
-        @Html.ActionLink("Find Your Pro!", "FindProsByCategory", "AppEvents", new { id = @Model.Event.CategoryId }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Find Your Pro!", "FindProsByCategory", "AppEvents", new {id = @Model.Event.CategoryId}, new {@class = "btn btn-primary"})
     </p>
-    
+
     <p>
-        @Html.ActionLink("Edit", "Edit", "AppEvents", new { id = @Model.Event.Id }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Edit", "Edit", "AppEvents", new {id = @Model.Event.Id}, new {@class = "btn btn-primary"})
         @*@Html.ActionLink(linkText: "Edit", actionName: "Edit",  routeValues: new { id = @Model.Event.Id },controllerName:"AppEvents")*@
     </p>
-    
+
 
     <p>
         <button type="button" class="btn btn-primary btn-lg" onclick="location.href = '@Url.Action("Index", "AppEvents")'">Back to your events</button>
     </p>
-    
+
+    <p>
+        <a class="btn btn-primary" href='javascript:history.go(-1)'>back</a>
+    </p>
 
 </div>
 

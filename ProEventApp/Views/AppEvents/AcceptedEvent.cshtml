@@ -3,8 +3,8 @@
     ViewBag.Title = "AppEventDetailsForm";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div style="background: rgba(255, 0, 0, 0.2);">
-
+<div style="background: rgba(255, 0, 0, 0.2); width: 80%;">
+    <div style="text-align: center">
     <h1>
         @Model.Event.Name
     </h1>
@@ -34,7 +34,7 @@
     <p>
         House number: @Model.Event.HouseNumber
     </p>
-
+    </div>
     @if (Model.EventProfessionals.Any())
     {
         <h2>Offers accepted to this event</h2>
@@ -87,7 +87,7 @@
     @using (Html.BeginForm("SaveCommentToEvent", "AppEvents"))
     {
         <div class="form-group">
-            @Html.LabelFor(m => m.EventComment.Content)
+            @Html.LabelFor(m => m.EventComment.Content,"Comment")
             @Html.TextBoxFor(m => m.EventComment.Content, new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.EventComment.Content)
         </div>
@@ -95,13 +95,18 @@
         @Html.HiddenFor(m => m.EventComment.Id)
         <button type="submit" class="btn btn-primary">Comment</button>
     }
-
+        <br />
     <p>
         <button type="button" class="btn btn-primary btn-lg" onclick="location.href = '@Url.Action("Index", "AppEvents")'">Back to your events</button>
     </p>
+
     <p>
         @Html.ActionLink("Edit", "Edit", "AppEvents", new { id = @Model.Event.Id }, new { @class = "btn btn-primary" })
         @*@Html.ActionLink(linkText: "Edit", actionName: "Edit",  routeValues: new { id = @Model.Event.Id },controllerName:"AppEvents")*@
+    </p>
+    
+    <p>
+        <a class="btn btn-primary" href='javascript:history.go(-1)'>back</a>
     </p>
    
 
