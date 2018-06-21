@@ -17,15 +17,15 @@
         @Html.LabelFor(m => m.EventProfessional.Price)
         @Html.TextBoxFor(m => m.EventProfessional.Price, new { @class = "form-control" })
     </div>
-    @*<div class="form-group">
+    <div class="form-group">
         @Html.LabelFor(m => m.EventProfessional.DateOfJob,"Date")
         @Html.TextBoxFor(m => m.EventProfessional.DateOfJob, new { type = "datetime-local" })
         @Html.ValidationMessageFor(m => m.EventProfessional.DateOfJob)
-    </div>*@
-    @*<div>
+    </div>
+    <div>
         @Html.LabelFor(m => m.EventProfessional.Importance)
         @Html.TextBoxFor(m => m.EventProfessional.Importance, new { @class = "form-control" })
-    </div>*@
+    </div>
     <div>
         @Html.LabelFor(m=>m.EventProfessional.Importance)
         @Html.EnumDropDownListFor(m => m.ScoringRange, "Select the importance", new {@class = "form-control"})

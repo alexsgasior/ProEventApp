@@ -127,6 +127,7 @@ namespace ProEventApp.Controllers
         [Authorize(Roles = RoleName.AppUser)]
         public ActionResult SaveProfessionalToEvent(EventProfessionalForm _eventProfessional,int id=0)
         {
+            //_eventProfessional.EventProfessional.InvitationStatusId = 1;
             var appEventId = Convert.ToInt32(TempData["idOfEventPassToInv"]); // IdOfCurrentEvent
             id = Convert.ToInt32(TempData["professionalToInv"]);
 
@@ -152,7 +153,7 @@ namespace ProEventApp.Controllers
                 ProfessionalId = professionalToInv.Id,
                 Professional = professionalToInv,
                 InvitationStatusId = /*_eventProfessional.EventProfessional.InvitationStatusId*/invStatus_Pending.Id,
-                InvitationStatus = invStatus,
+                InvitationStatus = invStatus_Pending,
                 AppEvent = eventToInv,
                 AppEventId = appEventId,
                 Rola = "AppUser"
