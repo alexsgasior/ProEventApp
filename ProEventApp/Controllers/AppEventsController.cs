@@ -158,6 +158,7 @@ namespace ProEventApp.Controllers
                 AppEventId = appEventId,
                 Rola = "AppUser"
             };
+            //
             _context.EventProfessionals.Add(inv);
             _context.SaveChanges();
             //return View();
