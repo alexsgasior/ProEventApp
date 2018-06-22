@@ -82,6 +82,7 @@ namespace ProEventApp.Controllers
                 Comment = _eventProfessional.EventProfessional.Comment,
                 Importance = _eventProfessional.EventProfessional.Importance,
                 Price = _eventProfessional.EventProfessional.Price,
+                DateOfJob = _eventProfessional.EventProfessional.DateOfJob,
                 ProfessionalId = professionalToInv.Id,
                 Professional = professionalToInv,
                 InvitationStatusId = invStatus_Pending.Id,

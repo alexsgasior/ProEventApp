@@ -623,6 +623,7 @@
     <Content Include="Views\ProAdvertisements\IndexUserAdds.cshtml" />
     <Content Include="Views\Manage\AdminForm.cshtml" />
     <Content Include="Views\ProAdvertisements\IndexAdmin.cshtml" />
+    <Content Include="Views\Profiles\ProDetailProfileJS.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

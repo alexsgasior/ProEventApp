@@ -128,6 +128,28 @@ namespace ProEventApp.Controllers
 
             return View("ProDetailProfile", viewModel);
         }
+        [Authorize(Roles = RoleName.Admin + "," + RoleName.AppUser + "," + RoleName.Professional)]
+        public ActionResult ProDetailProfileSpecificJS(int id)
+        {
+            var pro = _context.Professionals.SingleOrDefault(m => m.Id == id);
+            var proId = pro.Id;
+            var professional = _context.Professionals.Include(m => m.Profession).SingleOrDefault(m => m.Id == proId);
+            var profileId = _context.Professionals.SingleOrDefault(m => m.Id == proId).ProfileId;
+            var profile = _context.Profiles.SingleOrDefault(m => m.Id == profileId);
+            var _profileImages = _context.ProfileImages.Include(m => m.Image).Where(m => m.ProfileId == profileId)
+                .ToList();
+            var _UPComments = _context.UserProComments.Where(c => c.ProfessionalId == proId).Include(c => c.Comment).ToList();
+
+            var viewModel = new ProfileViewModel()
+            {
+                Professional = professional,
+                Profile = profile,
+                ProfileImages = _profileImages,
+                UserProComments = _UPComments
+            };
+
+            return View("ProDetailProfileJS", viewModel);
+        }
 
         [Authorize(Roles = RoleName.Admin + "," + RoleName.AppUser + "," + RoleName.Professional)]
         public ActionResult ProfileFromAds(int id)
@@ -328,8 +350,10 @@ namespace ProEventApp.Controllers
                 }
                 else
                 {
-                    ViewBag.Message("No deals done together, you cannot comment on this Pro!");
-                    return Redirect(Request.UrlReferrer.ToString());
+                    //ViewBag.Message("No deals done together, you cannot comment on this Pro!");
+                    //return Redirect(Request.UrlReferrer.ToString());
+                    var str = Request.UrlReferrer.ToString().Split('/').Last();
+                    return ProDetailProfileSpecificJS(Convert.ToInt32(str));
                 }
 
 
